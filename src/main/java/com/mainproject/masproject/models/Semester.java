@@ -39,6 +39,7 @@ public class Semester {
     public SeasonType getSeason(){
         return null;
     };
+
     @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

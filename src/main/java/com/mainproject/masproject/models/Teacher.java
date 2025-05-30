@@ -10,7 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -31,5 +33,7 @@ public class Teacher {
     @JoinColumn(name = "employee_id", updatable = false, nullable = false)
     private Employee employeeTeacher;
 
+    @OneToMany(mappedBy = "taughtBy", cascade = CascadeType.REMOVE)
+    private Set<Lesson> teaches = new HashSet<>();
 
 }

@@ -32,4 +32,8 @@ public class GroupUni {
     @EqualsAndHashCode.Exclude
     private Set<Student> submitedBy = new HashSet<>();
 
+    @OneToMany(mappedBy = "attendedBy", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Assignment> attendsIn = new HashSet<>();
 }

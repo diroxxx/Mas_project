@@ -33,4 +33,8 @@ public class Subject {
     @EqualsAndHashCode.Exclude
     private Set<SubjectRealization> includedIn = new HashSet<>();
 
+    @OneToOne(mappedBy = "definedBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Syllabus defines;
 }

@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f4;
+}
+
+h3 {
+    background-color: #d3d3d3;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+select, button {
+    padding: 8px 12px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.lesson {
+    display: flex;
+    /*width: 100px;*/
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    /*background-color: #e2f0cb; !* default for exercises *!*/
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.lesson.lecture {
+    /*background-color: #a3d2f3;*/
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.lesson-header strong {
+    font-weight: bold;
+    flex: 1;
+}
+
+.lesson-header .badge {
+    margin-left: auto;
+}
+
+
+
+.badge {
+    background-color: #444;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.lesson-icons {
+    display: flex;
+    gap: 12px;
+    font-size: 20px;
+}
+
+
+.lesson-icons span {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.lesson-icons span:hover {
+    transform: scale(1.2);
+}
+.header-lesson {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-group-form {
+ display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: center;
+}
+.lesson-container {
+    display: flex;
+    flex-wrap: wrap; /* ← dzięki temu lekcje zawijają się do kolejnego wiersza */
+    gap: 20px;        /* ← odstęp między lekcjami */
+}
+.lesson {
+    flex: 1 1 300px; /* ← domyślna szerokość + możliwość zwijania */
+    min-width: 250px;
+    max-width: 400px;
+}
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Schedule</title>
+    <link rel="stylesheet" th:href="@{/css/schedule.css}" />
+</head>
+<body>
+
+<div class="container-group-form">
+    <h1>Management of the schedule</h1>
+    <form method="post" th:action="@{/schedule/getScheduleForGroup}" class="form-group">
+        <div>
+            <label for="group-select">Student groups</label>
+            <select id="group-select" name="groupId" required>
+                <option value="" disabled selected>Wybierz grupę</option>
+                <th:block th:each="group : ${groups}">
+                    <option th:value="${group.id}" th:text="${group.name}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <button type="submit">Find</button>
+    </form>
+</div>
+
+
+<div th:each="entry : ${lessonsByDay}">
+    <h3 th:text="${entry.key}">Monday</h3>
+
+    <div class="lesson-container">
+        <div th:each="lesson : ${entry.value}">
+            <div th:replace="fragments/lesson-card :: lessonCard(${lesson})"></div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<h1 th:if="${lessonsByDay == null or #maps.isEmpty(lessonsByDay)}">
+    dana grupa nie posiada zajęć
+</h1>
+<script>
+    function toggleEdit(id) {
+        const form = document.getElementById('edit-' + id);
+        form?.classList.toggle('open');
+    }
+</script>
+
+</body>
+</html>

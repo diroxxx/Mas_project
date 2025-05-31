@@ -26,6 +26,8 @@ public class Student {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "person_id", updatable = false, nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Person personStudent;
 
 

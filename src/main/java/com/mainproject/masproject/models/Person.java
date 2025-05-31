@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Entity
@@ -40,6 +37,8 @@ public class Person {
     private int phoneNumber;
 
     @OneToOne(mappedBy = "personStudent", cascade = CascadeType.REMOVE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Student student;
 
     @OneToOne(mappedBy = "personEmployee" , cascade = CascadeType.REMOVE)

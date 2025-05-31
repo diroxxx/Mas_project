@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,11 +23,9 @@ public class Assignment {
     @NotNull
     private String dayOfWeek;
 
-    private LocalDate startTime;
+    private LocalTime startTime;
 
     private static double durationInMinutes = 90;
-
-    private boolean isMandatory;
 
     @ManyToOne
     @NotNull

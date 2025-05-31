@@ -8,6 +8,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,10 @@ public class DataInitializer {
     private final SubjectRepository subjectRepository;
     private final SubjectRealizationRepository subjectRealizationRepository;
     private final SemesterRepository semesterRepository;
+    private final LessonRepository lessonRepository;
+    private final AssignmentRepository assignmentRepository;
+    private final ClassroomRepository classroomRepository;
+    private final ClassActivityRepository classActivityRepository;
     @EventListener
     public void atStart(ContextRefreshedEvent event) {
 
@@ -120,13 +125,75 @@ public class DataInitializer {
                 groupUniRepository.save(groupUni2);
                 groupUni2.setSubmitedBy(Set.of(student));
 
-                student.getSubmitTo().add(groupUni2); // Tylko to wystarczy!
+                student.getSubmitTo().add(groupUni2);
                 studentRepository.save(student);
+
+                //daodanie lekcji
+                Lesson lesson1 = new Lesson();
+                lesson1.setName("lesson1");
+                lesson1.setType(LessonType.LECTURE);
+                lesson1.setBasedOn(subjectRealization1);
+                lesson1.setTaughtBy(teacher);
+
+
+                Lesson lesson2 = new Lesson();
+                lesson2.setName("lesson2");
+                lesson2.setType(LessonType.EXERCISE);
+                lesson2.setBasedOn(subjectRealization1);
+                lesson2.setTaughtBy(teacher);
+
+
+                lessonRepository.saveAll(Set.of(lesson1, lesson2));
+//
+                subjectRealization1.setBasedFor(Set.of(lesson1, lesson2));
+                subjectRealizationRepository.save(subjectRealization1);
+                teacher.setTeaches(Set.of(lesson1, lesson2));
+                teacherRepository.save(teacher);
+
+
+                Assignment assignment = new Assignment();
+                assignment.setDayOfWeek("FRIDAY");
+                assignment.setStartTime(LocalTime.of(10, 0));
+                assignment.setScheduledBy(lesson1);
+                assignment.setAttendedBy(groupUni2);
+
+
+                Assignment assignment2 = new Assignment();
+                assignment2.setDayOfWeek("FRIDAY");
+                assignment2.setStartTime(LocalTime.of(12, 0));
+                assignment2.setScheduledBy(lesson2);
+                assignment2.setAttendedBy(groupUni2);
+
+                assignmentRepository.saveAll(Set.of(assignment, assignment2));
+
+                Classroom classroom = new Classroom();
+                classroom.setCapacity(20);
+                classroom.setRoomNumber("123_c");
+                classroomRepository.save(classroom);
+
+
+                ClassActivity classActivity = new ClassActivity();
+                classActivity.setOccupiedDate(LocalDate.of(2025, 3, 12));
+                classActivity.setStatus(ActivityStatus.SCHEDULED);
+                classActivity.setAccessedBy(assignment);
+                classActivity.setHeldIn(classroom);
+
+
+                ClassActivity classActivity2 = new ClassActivity();
+                classActivity2.setOccupiedDate(LocalDate.of(2025, 3, 12));
+                classActivity2.setStatus(ActivityStatus.SCHEDULED);
+                classActivity2.setAccessedBy(assignment2);
+                classActivity2.setHeldIn(classroom);
+
+
+                classActivityRepository.saveAll(Set.of(classActivity, classActivity2));
+
+
+
 
             }catch (Exception e){
                 e.printStackTrace();
             }
-
 
         }
 

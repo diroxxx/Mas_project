@@ -1,0 +1,25 @@
+<div th:fragment="lessonCard(lesson)">
+    <div class="lesson">
+
+            <div class="lesson-content">
+                <div class="lesson-header">
+                    <strong th:text="|${#temporals.format(lesson.startTime, 'HH:mm')}-${#temporals.format(lesson.endTime, 'HH:mm')}|">
+                        10:00–11:30
+                    </strong>
+                    <span class="badge" th:classappend="${lesson.lessonType.name()  == 'LECTURE'} ? ' lecture' : ' exercise'" th:text="${lesson.lessonType}">LECTURE</span>
+                </div>
+
+                <div class="lesson-info">
+                    <span th:text="${lesson.subjectName}">asd asdasd</span><br/>
+                    <span th:text="'Classroom: ' + ${lesson.roomNumber}">Classroom: 123_c</span><br/>
+                    <span th:text="'students: ' + ${lesson.groupCapacity}">students: 20</span>
+                </div>
+
+                <div class="lesson-icons">
+                    <span class="edit-icon">✏️</span>
+                    <span class="delete-icon">🗑️</span>
+                </div>
+            </div>
+
+    </div>
+</div>

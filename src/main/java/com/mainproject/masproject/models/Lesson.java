@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
@@ -34,11 +35,12 @@ public class Lesson {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "subject_realization_id", nullable = false)
+    @JoinColumn(name = "subject_realization_id" , nullable = false)
     private SubjectRealization basedOn;
 
     @ManyToOne
     @NotNull
     @JoinColumn(name = "teacher_id", nullable = false)
+    @EqualsAndHashCode.Exclude
     private Teacher taughtBy;
 }

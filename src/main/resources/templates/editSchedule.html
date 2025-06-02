@@ -29,20 +29,32 @@
 
     <div class="lesson-container">
         <div th:each="lesson : ${entry.value}">
-            <div th:replace="fragments/lesson-card :: lessonCard(${lesson})"></div>
+            <div th:insert="fragments/lesson-card :: lessonCard(${lesson})" onclick="toggleForm('${lesson.subjectId}')" ></div>
+            <div class="form-edit" id="edit-${lesson.subjectId}" style="display: none;">
+                <form method="post" th:action="@{/editLesson}">
+                    <input type="hidden" name="lessonId" th:value="${lesson.subjectId}" />
+                    <label>
+                        Classroom:
+                        <input type="text" name="roomNumber" th:value="${lesson.roomNumber}" />
+                    </label>
+                    <!-- inne pola -->
+                    <button type="submit">Zapisz</button>
+                </form>
+            </div>
         </div>
+
     </div>
-</div>
 
-
-</div>
+    </div>
 <h1 th:if="${lessonsByDay == null or #maps.isEmpty(lessonsByDay)}">
     dana grupa nie posiada zajęć
 </h1>
 <script>
-    function toggleEdit(id) {
-        const form = document.getElementById('edit-' + id);
-        form?.classList.toggle('open');
+    function toggleForm(id) {
+        const el = document.getElementById('edit-' + id);
+        if (el) {
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
     }
 </script>
 

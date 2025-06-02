@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,22 @@ public class Student {
 
     @Column(unique = true)
     private String index;
+
+    @Enumerated(EnumType.ORDINAL)
+    private StudentStatus status;
+
+    private double tuitionBalance;
+
+
+
+
+
+
+
+
+
+
+
 
     @OneToOne(optional = false)
     @JoinColumn(name = "person_id", updatable = false, nullable = false)

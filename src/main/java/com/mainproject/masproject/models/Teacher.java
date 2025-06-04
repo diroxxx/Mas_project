@@ -33,7 +33,10 @@ public class Teacher {
     @JoinColumn(name = "employee_id", updatable = false, nullable = false)
     private Employee employeeTeacher;
 
-    @OneToMany(mappedBy = "taughtBy", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "taughtBy", cascade = CascadeType.ALL)
     private Set<Lesson> teaches = new HashSet<>();
+
+    @OneToMany(mappedBy = "leadBy", cascade = CascadeType.ALL)
+    private Set<Lesson> leads = new HashSet<>();
 
 }

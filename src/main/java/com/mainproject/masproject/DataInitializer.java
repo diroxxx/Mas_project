@@ -173,22 +173,20 @@ public class DataInitializer {
 
 
                 ClassActivity classActivity = new ClassActivity();
-                classActivity.setOccupiedDate(LocalDate.of(2025, 3, 12));
-                classActivity.setStatus(ActivityStatus.SCHEDULED);
+                classActivity.setCreatedAt(LocalDate.of(2025, 3, 12));
+                classActivity.setCreatedAt(LocalDate.now());
                 classActivity.setAccessedBy(assignment);
                 classActivity.setHeldIn(classroom);
 
 
                 ClassActivity classActivity2 = new ClassActivity();
-                classActivity2.setOccupiedDate(LocalDate.of(2025, 3, 12));
-                classActivity2.setStatus(ActivityStatus.SCHEDULED);
+                classActivity2.setCreatedAt(LocalDate.of(2025, 3, 12));
+                classActivity2.setCreatedAt(LocalDate.now());
                 classActivity2.setAccessedBy(assignment2);
                 classActivity2.setHeldIn(classroom);
 
 
                 classActivityRepository.saveAll(Set.of(classActivity, classActivity2));
-
-
 
 
             }catch (Exception e){

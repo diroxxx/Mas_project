@@ -23,16 +23,21 @@ public class Assignment {
     @NotNull
     private String dayOfWeek;
 
+    @NotNull
     private LocalTime startTime;
 
     private static double durationInMinutes = 90;
+
+    @ElementCollection
+    @CollectionTable(name = "time_slot", joinColumns = @JoinColumn(name = "assignment_id"))
+    private Set<LocalTime> availableTimeSlots = new HashSet<>();
 
     @ManyToOne
     @NotNull
     @JoinColumn(name = "group_uni_id", nullable = false)
     private GroupUni attendedBy;
 
-    @OneToMany(mappedBy = "accessedBy", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "accessedBy", cascade = CascadeType.ALL)
     @NotNull
     private Set<ClassActivity> accessTo = new HashSet<>();
 

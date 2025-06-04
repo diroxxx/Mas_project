@@ -1,6 +1,7 @@
 package com.mainproject.masproject.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +20,9 @@ public class ClassActivity {
     private Long id;
 
     @NotNull
-    private LocalDate occupiedDate;
-
-    @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    private ActivityStatus status;
-
+    private LocalDate createdAt;
+    @NotBlank
+    private String note;
 
     @ManyToOne
     @JoinColumn(name = "assignment_id", nullable = false)

@@ -3,10 +3,7 @@ package com.mainproject.masproject.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,5 +39,12 @@ public class Lesson {
     @NotNull
     @JoinColumn(name = "teacher_id", nullable = false)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Teacher taughtBy;
+
+    @ManyToOne()
+    @JoinColumn(name = "teacher_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Teacher leadBy;
 }

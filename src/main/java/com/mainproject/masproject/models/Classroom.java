@@ -25,6 +25,6 @@ public class Classroom {
     private String roomNumber;
     private int capacity;
 
-    @OneToMany(mappedBy = "heldIn", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "heldIn", cascade = CascadeType.ALL)
     private Set<ClassActivity> holds = new HashSet<>();
 }

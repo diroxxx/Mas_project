@@ -2,7 +2,27 @@ package com.mainproject.masproject.repositories;
 
 import com.mainproject.masproject.models.GroupUni;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.time.LocalTime;
 
 public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
+
+    @Query("""
+    SELECT COUNT(*) > 0
+    FROM GroupUni g
+    JOIN g.attendsIn a
+    JOIN a.accessTo ca
+    JOIN ca.heldIn c
+    WHERE g.id = :id
+      AND lower(a.dayOfWeek) = lower(:day)
+      AND a.startTime = :startTime
+""")
+    boolean checkGroupClassActivity(
+            @Param("id") Long id,
+            @Param("day") String day,
+            @Param("startTime") LocalTime startTime
+    );
 }

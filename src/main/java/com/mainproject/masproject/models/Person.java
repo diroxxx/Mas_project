@@ -36,13 +36,12 @@ public class Person {
     @Size(min = 9, max = 9)
     private int phoneNumber;
 
-    @OneToOne(mappedBy = "personStudent", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "personStudent", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Student student;
 
-    @OneToOne(mappedBy = "personEmployee" , cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "personEmployee" , cascade = CascadeType.ALL)
     private Employee personEmployee;
-
 
 }

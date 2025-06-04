@@ -1,6 +1,7 @@
 package com.mainproject.masproject.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,6 @@ public class Employee {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate hireDate;
 
-    @NotNull
     private static int maxDailyHours = 12;
 
     @OneToOne(optional = false)

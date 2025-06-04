@@ -6,6 +6,7 @@ import com.mainproject.masproject.repositories.GroupUniRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,5 +22,9 @@ public class GroupUniService {
         return groupUniRepository.findAll().stream()
                 .map(group -> new GroupUniDto(group.getId(), group.getName()))
                 .toList();
+    }
+
+    public boolean isAvailable(Long groupId, String dayOfWeek, LocalTime time, double duration) {
+
     }
 }

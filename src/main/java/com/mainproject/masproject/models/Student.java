@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,14 +30,39 @@ public class Student {
     private double tuitionBalance;
 
 
+    public Student(String index,  double tuitionBalance) {
+        this.index = index;
+        this.tuitionBalance = tuitionBalance;
+    }
 
 
 
+    public void graduate() {
+        this.status = StudentStatus.GRADUATED;
+    }
+    public void withdrawn() {
+        this.status = StudentStatus.WITHDRAWN;
+    }
+    public void sendRequest() {
+        this.status = StudentStatus.STUDY_BREAK;
+    }
+    public void resumeStudies() {
+        this.status = StudentStatus.ACTIVE;
+    }
+    public void checkBalance() {
+        if (this.tuitionBalance < 0) {
+            this.status = StudentStatus.SUSPENDED;
 
-
-
-
-
+        } else {
+            this.status = StudentStatus.ACTIVE;
+        }
+    }
+    public void archiveStudent() {
+        this.status = StudentStatus.GRADUATED;
+    }
+    public void finalizeGraduation() {
+        this.status = StudentStatus.WITHDRAWN;
+    }
 
 
     @OneToOne(optional = false)

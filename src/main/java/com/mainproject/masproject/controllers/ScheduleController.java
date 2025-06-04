@@ -24,30 +24,6 @@ public class ScheduleController {
     private final GroupUniService groupUniService;
     private final AssignmentRepository assignmentRepository;
 
-//    @GetMapping()
-//    public String schedule(Model model) {
-//        List<GroupUniDto> allGroups = groupUniService.getAllGroups();
-//
-//        model.addAttribute("groups", allGroups);
-//
-//        return "editSchedule";
-//    }
-//
-//
-//    @PostMapping("/getScheduleForGroup")
-//    public String submitSchedule(@RequestParam Long groupId, Model model) {
-//        List<GroupLessonDto> lessons = assignmentRepository.getFullSchedule(groupId);
-//        List<GroupUniDto> allGroups = groupUniService.getAllGroups();
-//
-//        Map<String, List<GroupLessonDto>> groupLessonsByDay = lessons.stream()
-//                        .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek));
-//        System.out.println(groupLessonsByDay);
-//        model.addAttribute("groups", allGroups);
-//        model.addAttribute("lessonsByDay", groupLessonsByDay);
-//        model.addAttribute("selectedGroupId", groupId);
-//        return "editSchedule";
-//    }
-
     @GetMapping()
     public String schedule(@RequestParam(required = false) Long groupId, Model model) {
         List<GroupUniDto> allGroups = groupUniService.getAllGroups();

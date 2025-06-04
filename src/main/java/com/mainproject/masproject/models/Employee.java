@@ -33,9 +33,9 @@ public class Employee {
     private Person personEmployee;
 
 
-    @OneToOne(mappedBy = "employeeDean", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "employeeDean", cascade = CascadeType.ALL)
     private DeanOfficeEmployee deanOfficeEmployee;
 
-    @OneToOne(mappedBy = "employeeTeacher", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "employeeTeacher", cascade = CascadeType.ALL)
     private Teacher teacher;
 }

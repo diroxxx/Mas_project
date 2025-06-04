@@ -3,6 +3,7 @@ package com.mainproject.masproject.controllers;
 import com.mainproject.masproject.dtos.GroupLessonDto;
 import com.mainproject.masproject.dtos.GroupUniDto;
 import com.mainproject.masproject.repositories.AssignmentRepository;
+import com.mainproject.masproject.repositories.GroupUniRepository;
 import com.mainproject.masproject.services.GroupUniService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class ScheduleController {
     private final GroupUniService groupUniService;
     private final AssignmentRepository assignmentRepository;
+    private GroupUniRepository groupUniRepository;
 
     @GetMapping()
     public String schedule(@RequestParam(required = false) Long groupId, Model model) {
@@ -31,7 +33,7 @@ public class ScheduleController {
         model.addAttribute("selectedGroupId", groupId);
 
         if (groupId != null) {
-            List<GroupLessonDto> lessons = assignmentRepository.getFullSchedule(groupId);
+            List<GroupLessonDto> lessons = groupUniRepository.getFullSchedule(groupId);
             Map<String, List<GroupLessonDto>> lessonsByDay = lessons.stream()
                     .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek));
             model.addAttribute("lessonsByDay", lessonsByDay);

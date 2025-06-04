@@ -26,14 +26,24 @@ public class GroupUni {
     @Size(min = 1, max = 30)
     private int capacity;
 
+
+//    public void addStudent()
+
+
     @ManyToMany(mappedBy = "submitTo")
     @Builder.Default
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Student> submitedBy = new HashSet<>();
+    @MapKey(name = "index")
+    private Map<String,Student> submitedBy = new HashMap<>();
 
     @OneToMany(mappedBy = "attendedBy", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Assignment> attendsIn = new HashSet<>();
+
+
+
+
+
 }

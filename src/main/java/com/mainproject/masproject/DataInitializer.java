@@ -34,10 +34,7 @@ public class DataInitializer {
 
         if (personRepository.count() == 0 ) {
 
-
             try {
-
-
                 Person person = Person.builder()
                         .pesel("12312312311")
                         .firstName("Tomek")
@@ -92,7 +89,7 @@ public class DataInitializer {
 
                 GroupUni groupUni = new GroupUni();
                 groupUni.setName("25c_s6");
-                groupUni.setCapacity(20);
+                groupUni.setCapacity(21);
                 groupUniRepository.save(groupUni);
 
                 student.getSubmitTo().add(groupUni);
@@ -231,7 +228,7 @@ public class DataInitializer {
                 assignmentRepository.saveAll(Set.of(assignment, assignment2, assignment3));
 
                 Classroom classroom = new Classroom();
-                classroom.setCapacity(20);
+                classroom.setCapacity(23);
                 classroom.setRoomNumber("123A");
 //                classroomRepository.save(classroom);
 

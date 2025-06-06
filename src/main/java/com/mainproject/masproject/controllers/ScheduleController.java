@@ -56,8 +56,6 @@ public class ScheduleController {
         model.addAttribute("subjects", subjectRepository.findAll());
 
 
-
-
         List<TeacherRepository.TeacherProjection> allTeachers = teacherRepository.findAllTeachers();
         allTeachers.forEach(teacher -> {
             System.out.println(teacher.getId());
@@ -65,7 +63,6 @@ public class ScheduleController {
         model.addAttribute("teachers", allTeachers);
 
         model.addAttribute("daysOfWeek", daysOfWeek);
-
 
 
         model.addAttribute("classrooms", classroomRepository.getAllClassrooms());

@@ -11,6 +11,7 @@ h3 {
     margin-top: 30px;
 }
 
+/* === FORMULARZE OGÓLNE === */
 form {
     display: flex;
     align-items: center;
@@ -35,41 +36,59 @@ button:hover {
     background-color: #218838;
 }
 
-.lesson {
+/* === CONTAINERY === */
+.container-group-form {
     display: flex;
-    /*width: 100px;*/
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    margin-top: 30px;
 }
 
-
-.lesson-container{
+.lesson-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     padding: 20px;
     background-color: dimgrey;
     border-radius: 20px;
 }
+
+/* === KARTY ZAJĘĆ === */
+.lesson {
+    flex: 1 1 300px;
+    min-width: 250px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.lecture-block {
+    background-color: #B8F4B8;
+}
+
+.exercise-block {
+    background-color: #57B1E9;
+}
+
+/* === NAGŁÓWEK LEKCJI === */
 .lesson-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-
-.lesson-header strong {
-    font-weight: bold;
-    flex: 1;
+.lesson {
+    display: flex;
+    width: 100%;
 }
 
-.lesson-header .badge {
-    margin-left: auto;
-}
-
-
+/* === BADGE === */
 .badge {
     background-color: #444;
     color: white;
@@ -80,12 +99,12 @@ button:hover {
     text-align: center;
 }
 
+/* === IKONY === */
 .lesson-icons {
     display: flex;
     gap: 12px;
     font-size: 20px;
 }
-
 
 .lesson-icons span {
     cursor: pointer;
@@ -95,46 +114,43 @@ button:hover {
 .lesson-icons span:hover {
     transform: scale(1.2);
 }
-.header-lesson {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.container-group-form {
- display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    flex-direction: column;
-    align-items: center;
-}
-.lesson-container {
-    display: flex;
-    flex-wrap: wrap; /* ← dzięki temu lekcje zawijają się do kolejnego wiersza */
-    gap: 20px;        /* ← odstęp między lekcjami */
-}
-.lesson {
-    flex: 1 1 300px; /* ← domyślna szerokość + możliwość zwijania */
-    min-width: 250px;
-    max-width: 400px;
-}
 
-/*dla form do edycji*/
+/* === FORMULARZ EDYCJI === */
 .form-edit form {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: flex-start;
+    padding: 10px;
+    background-color: rgba(68, 68, 68, 0.42);
+    border-radius: 10px;
 }
 
 .form-edit form .form-group {
     display: flex;
     flex-direction: column;
-    width: 200px; /* lub inna szerokość */
-}
-.lecture-block{
-    background-color: #B8F4B8;
+    width: 200px;
 }
 
-.exercise-block{
-    background-color: #57B1E9;
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #444;
+}
+
+.form-group select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    outline: none;
+    background-color: #f9f9f9;
 }

@@ -45,7 +45,8 @@ SELECT new com.mainproject.masproject.dtos.GroupLessonDto(
     a.dayOfWeek,
     a.startTime,
     ca.heldIn.roomNumber,
-    c.id
+    c.id,
+    c.capacity
 )
 FROM Assignment a
 JOIN a.scheduledBy l

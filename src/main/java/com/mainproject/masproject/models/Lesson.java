@@ -28,6 +28,8 @@ public class Lesson {
 
     @OneToMany(mappedBy = "scheduledBy", cascade = CascadeType.REMOVE)
     @NotNull
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Set<Assignment> scheduledAs = new HashSet<>();
 
     @ManyToOne

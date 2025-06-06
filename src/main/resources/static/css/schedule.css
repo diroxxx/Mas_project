@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 40px;
-    background-color: #f4f4f4;
+    background-color: #BAE9E6;
 }
 
 h3 {
@@ -44,14 +44,15 @@ button:hover {
     padding: 15px;
     border-radius: 10px;
     margin: 10px 0;
-    /*background-color: #e2f0cb; !* default for exercises *!*/
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.lesson.lecture {
-    /*background-color: #a3d2f3;*/
-}
 
+.lesson-container{
+    padding: 20px;
+    background-color: dimgrey;
+    border-radius: 20px;
+}
 .lesson-header {
     display: flex;
     justify-content: space-between;
@@ -67,7 +68,6 @@ button:hover {
 .lesson-header .badge {
     margin-left: auto;
 }
-
 
 
 .badge {
@@ -130,4 +130,11 @@ button:hover {
     display: flex;
     flex-direction: column;
     width: 200px; /* lub inna szerokość */
+}
+.lecture-block{
+    background-color: #B8F4B8;
+}
+
+.exercise-block{
+    background-color: #57B1E9;
 }

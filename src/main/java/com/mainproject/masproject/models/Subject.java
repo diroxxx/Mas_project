@@ -28,7 +28,7 @@ public class Subject {
     private int ects;
 
 
-    @OneToMany(mappedBy = "includedBy", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "includedBy", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<SubjectRealization> includedIn = new HashSet<>();

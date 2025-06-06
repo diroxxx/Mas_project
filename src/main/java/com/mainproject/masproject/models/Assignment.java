@@ -34,7 +34,8 @@ public class Assignment {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "group_uni_id", nullable = false)
+    @JoinColumn(name = "group_uni_id")
+//    @JoinColumn(name = "group_uni_id", nullable = false)
     private GroupUni attendedBy;
 
     @OneToMany(mappedBy = "accessedBy", cascade = CascadeType.ALL)

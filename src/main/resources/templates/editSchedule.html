@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label for="subject-select">Subject</label>
                 <select id="subject-select" name="subjectId" required>
-                    <option value="" disabled >choose s</option>
+                    <option value="" disabled >choose subject</option>
                     <th:block th:each="subject : ${subjects}">
                         <option th:value="${subject.id}" th:text="${subject.name}"></option>
                     </th:block>
@@ -48,10 +48,10 @@
 
             <div class="form-group">
                 <label for="teacher-select">Teacher</label>
-                <select id="teacher-select" name="teacherId" required>
-                    <option value="" disabled selected>choose t</option>
+                <select id="teacher-select" name="teacherId"  required>
+                    <option value="" disabled selected>choose teacher</option>
                     <th:block th:each="teacher : ${teachers}">
-                        <option th:value="${teacher.id}" th:text="${teacher.fullName}"></option>
+                        <option th:value="${teacher.id}" th:text="${teacher.getFullName}"></option>
                     </th:block>
                 </select>
             </div>
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <label for="dayOfWeek-select">Day of Week</label>
                 <select id="dayOfWeek-select" name="dayOfWeek" required>
-                    <option value="" disabled selected>choose d</option>
+                    <option value="" disabled selected>choose dayOfWeek</option>
                     <th:block th:each="dayOfTheWeek : ${daysOfWeek}">
                         <option th:value="${dayOfTheWeek}" th:text="${dayOfTheWeek}"></option>
                     </th:block>
@@ -70,7 +70,7 @@
                 <label for="startDate-select">Start Time</label>
                 <select id="startDate-select" name="startTime" required>
                     <option value="" disabled selected>Choose time</option>
-                    <th:block th:each="timeslot : ${times}">
+                    <th:block th:each="timeslot : ${timeSlots}">
                         <option th:value="${timeslot}" th:text="${timeslot}"></option>
                     </th:block>
                 </select>
@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label for="classroom-select">Classroom</label>
                 <select id="classroom-select" name="classroomId" required>
-                    <option value="" disabled selected >choose</option>
+                    <option value="" disabled selected >choose Classroom</option>
                     <th:block th:each="classroom : ${classrooms}">
                         <option th:value="${classroom.id}" th:text="${classroom.roomNumber}"></option>
                     </th:block>
@@ -89,7 +89,7 @@
             <div class="form-group">
                 <label for="typeOfLecture-select">Type</label>
                 <select id="typeOfLecture-select" name="typeOfLectureId" required>
-                    <option value="" disabled selected ></option>
+                    <option value="" disabled selected >Choose type</option>
                     <th:block th:each="typeOfLecture : ${typesOfLecture}">
                         <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>
                     </th:block>

@@ -2,6 +2,7 @@ package com.mainproject.masproject.controllers;
 
 import com.mainproject.masproject.dtos.GroupLessonDto;
 import com.mainproject.masproject.dtos.GroupUniDto;
+import com.mainproject.masproject.models.Teacher;
 import com.mainproject.masproject.repositories.*;
 import com.mainproject.masproject.services.AssignmentService;
 import com.mainproject.masproject.services.GroupUniService;
@@ -33,8 +34,9 @@ public class ScheduleController {
     private final SubjectRepository subjectRepository;
     private final TeacherRepository teacherRepository;
     private final ClassroomRepository classroomRepository;
+    private final LessonRepository lessonRepository;
 
-    List<LocalTime> times = new ArrayList<>(List.of(LocalTime.of(8, 30),
+   private static final List<LocalTime> times = new ArrayList<>(List.of(LocalTime.of(8, 30),
             LocalTime.of(10, 15),
             LocalTime.of(12, 15),
             LocalTime.of(14, 0),
@@ -42,24 +44,33 @@ public class ScheduleController {
             LocalTime.of(17, 30),
             LocalTime.of(19, 0)
     ));
+   private static final List<String> daysOfWeek = new ArrayList<>(List.of("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
+
 
     @GetMapping()
     public String schedule(@RequestParam(required = false) Long groupId, Model model) {
-        //do zmiany jesli dodam repozytoria
-        model.addAttribute("subjects", subjectRepository.findAll());
-
-        List<TeacherRepository.TeacherProjection> allTeachers = teacherRepository.findAllTeachers();
-//        System.out.println(allTeachers.size());
-        model.addAttribute("teachers", allTeachers);
-
-        List<String> daysOfWeek = new ArrayList<>(List.of("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"));
-        model.addAttribute("daysOfWeek", daysOfWeek);
 
         model.addAttribute("timeSlots", times);
 
+        //do zmiany jesli dodam repozytoria
+        model.addAttribute("subjects", subjectRepository.findAll());
+
+
+
+
+        List<TeacherRepository.TeacherProjection> allTeachers = teacherRepository.findAllTeachers();
+        allTeachers.forEach(teacher -> {
+            System.out.println(teacher.getId());
+        });
+        model.addAttribute("teachers", allTeachers);
+
+        model.addAttribute("daysOfWeek", daysOfWeek);
+
+
+
         model.addAttribute("classrooms", classroomRepository.getAllClassrooms());
 
-        model.addAttribute("typesOfLecture", assignmentService.getAllTimeSlots());
+        model.addAttribute("typesOfLecture", lessonRepository.getAllTypes());
 
 
         List<GroupUniDto> allGroups = groupUniService.getAllGroups();
@@ -71,12 +82,12 @@ public class ScheduleController {
             Map<String, List<GroupLessonDto>> lessonsByDay = lessons.stream()
                     .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek));
 
-            System.out.println(lessonsByDay.size());
             model.addAttribute("lessonsByDay", lessonsByDay);
         }
 
         return "editSchedule";
     }
+
 
     @PostMapping("/getScheduleForGroup")
     public String submitSchedule(@RequestParam Long groupId, RedirectAttributes redirectAttributes) {

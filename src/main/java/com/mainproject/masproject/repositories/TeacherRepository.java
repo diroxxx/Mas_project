@@ -28,7 +28,8 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     Optional<Teacher> existTeacherInGivenTime(@Param("id") Long id,@Param("day") String day,@Param("startTime") LocalTime startTime);
 
     @Query("""
-        select t.id, concat(p.firstName, ' ', p.lastName) from Teacher t
+    SELECT t.id AS id, CONCAT(p.firstName, ' ', p.lastName) AS fullName
+        from Teacher t
         join t.employeeTeacher e
         join e.personEmployee p
 """)

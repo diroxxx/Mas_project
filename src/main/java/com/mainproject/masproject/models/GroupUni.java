@@ -43,7 +43,23 @@ public class GroupUni {
     private Set<Assignment> attendsIn = new HashSet<>();
 
 
+    public void addStudent(Student student) {
+        if (student == null) {
+            return;
+        }
+        submitedBy.put(student.getIndex(), student);
+        student.getSubmitTo().add(this);
+    }
 
+    public void removeStudent(String index) {
+        if(index == null) {
+            return;
+        }
+        Student student = submitedBy.remove(index);
+        if (student != null) {
+            student.getSubmitTo().remove(this);
+        }
+    }
 
 
 }

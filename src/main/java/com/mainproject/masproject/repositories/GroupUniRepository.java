@@ -44,12 +44,14 @@ SELECT new com.mainproject.masproject.dtos.GroupLessonDto(
     g.capacity,
     a.dayOfWeek,
     a.startTime,
-    ca.heldIn.roomNumber
+    ca.heldIn.roomNumber,
+    c.id
 )
 FROM Assignment a
 JOIN a.scheduledBy l
 JOIN a.attendedBy g
 JOIN a.accessTo ca
+join ca.heldIn c
 WHERE g.id = :groupId
 """)
     List<GroupLessonDto> getFullSchedule(@Param("groupId") Long groupId);

@@ -43,7 +43,7 @@ public class Semester {
         return SeasonType.SUMMER;
     }
 
-    @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<SubjectRealization> offers = new HashSet<>();

@@ -2,6 +2,7 @@ package com.mainproject.masproject.dtos;
 
 import com.mainproject.masproject.models.Assignment;
 import com.mainproject.masproject.models.LessonType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,11 +25,12 @@ public class GroupLessonDto {
     private LocalTime startTime;
     private final LocalTime endTime;
 
+    private Long classId;
     private String roomNumber;
 
 
     public GroupLessonDto(Long subjectId, String subjectName, Long teacherId, String teacherName,
-                          LessonType lessonType, int groupCapacity, String dayOfWeek, LocalTime startTime, String roomNumber) {
+                          LessonType lessonType, int groupCapacity, String dayOfWeek, LocalTime startTime, String roomNumber,Long classId) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.teacherId = teacherId;
@@ -38,6 +40,7 @@ public class GroupLessonDto {
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.roomNumber = roomNumber;
+        this.classId = classId;
         this.endTime = startTime.plusMinutes((long) Assignment.getDurationInMinutes());
 
 //        this.duration= Assignment.getDurationInMinutes();

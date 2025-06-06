@@ -12,8 +12,6 @@ import java.util.List;
 public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
 
-   public List<LocalTime> getAllTimeSlots(){
-        return assignmentRepository.getTimeSlotsByAssignment();
-    }
+
 
 }

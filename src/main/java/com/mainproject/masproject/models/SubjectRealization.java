@@ -36,7 +36,7 @@ public class SubjectRealization {
     @JoinColumn(name = "semester_id", nullable = false)
     private Semester offeredBy;
 
-    @OneToMany(mappedBy = "basedOn", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "basedOn", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Lesson> basedFor = new HashSet<>();

@@ -42,9 +42,4 @@ public class Lesson {
     @ToString.Exclude
     private Teacher taughtBy;
 
-    @ManyToOne()
-    @JoinColumn(name = "teacher_id")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Teacher leadBy;
 }

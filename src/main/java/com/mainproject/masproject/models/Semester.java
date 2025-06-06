@@ -37,15 +37,16 @@ public class Semester {
 
 //    do implementacji
     public SeasonType getSeason(){
-        return null;
-    };
+        if (startDate.getMonthValue() > 9 && endDate.getMonthValue() < 4) {
+         return SeasonType.WINTER;
+        }
+        return SeasonType.SUMMER;
+    }
 
     @OneToMany(mappedBy = "offeredBy", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<SubjectRealization> offers = new HashSet<>();
-
-
 
 
 }

@@ -118,3 +118,16 @@ button:hover {
     max-width: 400px;
 }
 
+/*dla form do edycji*/
+.form-edit form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.form-edit form .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 200px; /* lub inna szerokość */
+}

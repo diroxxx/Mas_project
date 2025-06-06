@@ -35,8 +35,6 @@ public class Student {
         this.tuitionBalance = tuitionBalance;
     }
 
-
-
     public void graduate() {
         this.status = StudentStatus.GRADUATED;
     }

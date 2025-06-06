@@ -10,16 +10,16 @@
                 </div>
 
                 <div class="lesson-info">
-                    <span th:text="${lesson.subjectName}">asd asdasd</span><br/>
+                    <span th:text="${lesson.subjectName}">subject</span><br/>
+                    <span th:text="${lesson.teacherName}">teacher</span><br>
                     <span th:text="'Classroom: ' + ${lesson.roomNumber}">Classroom: 123_c</span><br/>
                     <span th:text="'students: ' + ${lesson.groupCapacity}">students: 20</span>
                 </div>
 
                 <div class="lesson-icons">
-                    <span class="edit-icon">✏️</span>
+                    <span class="edit-icon" onclick="toggleForm()">✏️</span>
                     <span class="delete-icon">🗑️</span>
                 </div>
             </div>
-
     </div>
 </div>

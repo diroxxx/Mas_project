@@ -29,31 +29,89 @@
 
     <div class="lesson-container">
         <div th:each="lesson : ${entry.value}">
-            <div th:insert="fragments/lesson-card :: lessonCard(${lesson})" onclick="toggleForm('${lesson.subjectId}')" ></div>
-            <div class="form-edit" id="edit-${lesson.subjectId}" style="display: none;">
-                <form method="post" th:action="@{/editLesson}">
-                    <input type="hidden" name="lessonId" th:value="${lesson.subjectId}" />
-                    <label>
-                        Classroom:
-                        <input type="text" name="roomNumber" th:value="${lesson.roomNumber}" />
-                    </label>
-                    <!-- inne pola -->
-                    <button type="submit">Zapisz</button>
-                </form>
-            </div>
+            <div th:replace="fragments/lesson-card :: lessonCard(${lesson})" ></div>
         </div>
+    </div>
+    <div class="form-edit" id="edit-form" style="display: none;">
+        <form method="post" th:action="@{/editLesson}">
+            <input type="hidden" name="lessonId" id="form-lessonId" />
 
+            <div class="form-group">
+                <label for="subject-select">Subject</label>
+                <select id="subject-select" name="subjectId" required>
+                    <option value="" disabled >choose s</option>
+                    <th:block th:each="subject : ${subjects}">
+                        <option th:value="${subject.id}" th:text="${subject.name}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="teacher-select">Teacher</label>
+                <select id="teacher-select" name="teacherId" required>
+                    <option value="" disabled selected>choose t</option>
+                    <th:block th:each="teacher : ${teachers}">
+                        <option th:value="${teacher.id}" th:text="${teacher.fullName}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dayOfWeek-select">Day of Week</label>
+                <select id="dayOfWeek-select" name="dayOfWeek" required>
+                    <option value="" disabled selected>choose d</option>
+                    <th:block th:each="dayOfTheWeek : ${daysOfWeek}">
+                        <option th:value="${dayOfTheWeek}" th:text="${dayOfTheWeek}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate-select">Start Time</label>
+                <select id="startDate-select" name="startTime" required>
+                    <option value="" disabled selected>Choose time</option>
+                    <th:block th:each="timeslot : ${times}">
+                        <option th:value="${timeslot}" th:text="${timeslot}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="classroom-select">Classroom</label>
+                <select id="classroom-select" name="classroomId" required>
+                    <option value="" disabled selected >choose</option>
+                    <th:block th:each="classroom : ${classrooms}">
+                        <option th:value="${classroom.id}" th:text="${classroom.roomNumber}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="typeOfLecture-select">Type</label>
+                <select id="typeOfLecture-select" name="typeOfLectureId" required>
+                    <option value="" disabled selected ></option>
+                    <th:block th:each="typeOfLecture : ${typesOfLecture}">
+                        <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>
+                    </th:block>
+                </select>
+            </div>
+
+            <button type="submit">Change</button>
+        </form>
     </div>
 
     </div>
 <h1 th:if="${lessonsByDay == null or #maps.isEmpty(lessonsByDay)}">
     dana grupa nie posiada zajęć
 </h1>
+
+
 <script>
-    function toggleForm(id) {
-        const el = document.getElementById('edit-' + id);
+    function toggleForm() {
+        const el = document.getElementById('edit-form');
         if (el) {
             el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            el.scrollIntoView({ behavior: 'smooth' });
         }
     }
 </script>

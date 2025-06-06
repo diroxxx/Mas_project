@@ -36,7 +36,4 @@ public class Teacher {
     @OneToMany(mappedBy = "taughtBy", cascade = CascadeType.ALL)
     private Set<Lesson> teaches = new HashSet<>();
 
-    @OneToMany(mappedBy = "leadBy", cascade = CascadeType.ALL)
-    private Set<Lesson> leads = new HashSet<>();
-
 }

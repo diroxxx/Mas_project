@@ -44,4 +44,9 @@ public class Assignment {
     @ManyToOne
     @JoinColumn(name = "lesson_id", nullable = false)
     private Lesson scheduledBy;
+
+
+    public static double getDurationInMinutes() {
+        return durationInMinutes;
+    }
 }

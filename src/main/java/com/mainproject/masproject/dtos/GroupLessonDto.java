@@ -1,5 +1,6 @@
 package com.mainproject.masproject.dtos;
 
+import com.mainproject.masproject.models.Assignment;
 import com.mainproject.masproject.models.LessonType;
 import lombok.Getter;
 import lombok.ToString;
@@ -21,7 +22,7 @@ public class GroupLessonDto {
 
     private String dayOfWeek;
     private LocalTime startTime;
-    private LocalTime endTime;
+    private final LocalTime endTime;
 
     private String roomNumber;
 
@@ -37,6 +38,8 @@ public class GroupLessonDto {
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.roomNumber = roomNumber;
-        this.endTime = startTime.plusMinutes(90);
+        this.endTime = startTime.plusMinutes((long) Assignment.getDurationInMinutes());
+
+//        this.duration= Assignment.getDurationInMinutes();
     }
 }

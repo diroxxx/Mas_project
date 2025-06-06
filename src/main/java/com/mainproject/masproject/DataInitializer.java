@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Component
@@ -39,8 +40,8 @@ public class DataInitializer {
 
                 Person person = Person.builder()
                         .pesel("12312312311")
-                        .firstName("asd")
-                        .lastName("asdasd")
+                        .firstName("Tomek")
+                        .lastName("Kowalksi")
                         .email("che-dom@wp.pl")
                         .phoneNumber(123123123)
                         .build();
@@ -68,7 +69,7 @@ public class DataInitializer {
                 groupUniRepository.save(groupUni);
 
                 student.getSubmitTo().add(groupUni);
-                groupUni.getSubmitedBy().add(student);
+                groupUni.getSubmitedBy().put(student.getIndex(), student);
 
 
                 person.setPersonEmployee(employee);
@@ -123,7 +124,7 @@ public class DataInitializer {
                 groupUni2.setName("25c_s7");
                 groupUni2.setCapacity(20);
                 groupUniRepository.save(groupUni2);
-                groupUni2.setSubmitedBy(Set.of(student));
+                groupUni2.setSubmitedBy(Map.of(student.getIndex(), student));
 
                 student.getSubmitTo().add(groupUni2);
                 studentRepository.save(student);
@@ -131,7 +132,7 @@ public class DataInitializer {
                 //daodanie lekcji
                 Lesson lesson1 = new Lesson();
                 lesson1.setName("lesson1");
-                lesson1.setType(LessonType.LECTURE);
+                lesson1.setType(LessonType.EXERCISE);
                 lesson1.setBasedOn(subjectRealization1);
                 lesson1.setTaughtBy(teacher);
 
@@ -152,16 +153,22 @@ public class DataInitializer {
 
 
                 Assignment assignment = new Assignment();
-                assignment.setDayOfWeek("FRIDAY");
+                assignment.setDayOfWeek("Friday");
                 assignment.setStartTime(LocalTime.of(10, 0));
                 assignment.setScheduledBy(lesson1);
                 assignment.setAttendedBy(groupUni2);
 
 
                 Assignment assignment2 = new Assignment();
-                assignment2.setDayOfWeek("FRIDAY");
+                assignment2.setDayOfWeek("Friday");
                 assignment2.setStartTime(LocalTime.of(12, 0));
                 assignment2.setScheduledBy(lesson2);
+                assignment2.setAttendedBy(groupUni2);
+
+                Assignment assignment3 = new Assignment();
+                assignment2.setDayOfWeek("Monday");
+                assignment2.setStartTime(LocalTime.of(14, 0));
+                assignment2.setScheduledBy(lesson1);
                 assignment2.setAttendedBy(groupUni2);
 
                 assignmentRepository.saveAll(Set.of(assignment, assignment2));
@@ -194,11 +201,5 @@ public class DataInitializer {
             }
 
         }
-
-
-
     }
-
-
-
 }

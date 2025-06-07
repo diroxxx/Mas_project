@@ -17,11 +17,19 @@
                 </div>
 
                 <div class="lesson-icons">
-                    <span class="edit-icon" onclick="toggleForm()">✏️</span>
+                    <span class="edit-icon"
+                          th:attr="data-lesson-id=${lesson.lessonId},
+               data-subject-id=${lesson.subjectId},
+               data-teacher-id=${lesson.teacherId},
+               data-day=${lesson.dayOfWeek},
+               data-time=${lesson.startTime},
+               data-classroom-id=${lesson.classId},
+               data-type=${lesson.lessonType}"
+                          onclick="editLesson(this)">
+                        ✏️
+                    </span>
                     <span class="delete-icon">🗑️</span>
                 </div>
-
-
 
 
     </div>

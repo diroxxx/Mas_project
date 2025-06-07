@@ -1,5 +1,6 @@
 package com.mainproject.masproject.controllers;
 
+import com.mainproject.masproject.dtos.EditLesson;
 import com.mainproject.masproject.dtos.GroupLessonDto;
 import com.mainproject.masproject.dtos.GroupUniDto;
 import com.mainproject.masproject.models.Teacher;
@@ -9,10 +10,7 @@ import com.mainproject.masproject.services.GroupUniService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalTime;
@@ -51,22 +49,12 @@ public class ScheduleController {
     public String schedule(@RequestParam(required = false) Long groupId, Model model) {
 
         model.addAttribute("timeSlots", times);
-
         //do zmiany jesli dodam repozytoria
         model.addAttribute("subjects", subjectRepository.findAll());
-
-
         List<TeacherRepository.TeacherProjection> allTeachers = teacherRepository.findAllTeachers();
-        allTeachers.forEach(teacher -> {
-            System.out.println(teacher.getId());
-        });
         model.addAttribute("teachers", allTeachers);
-
         model.addAttribute("daysOfWeek", daysOfWeek);
-
-
         model.addAttribute("classrooms", classroomRepository.getAllClassrooms());
-
         model.addAttribute("typesOfLecture", lessonRepository.getAllTypes());
 
 
@@ -80,7 +68,14 @@ public class ScheduleController {
                     .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek));
 
             model.addAttribute("lessonsByDay", lessonsByDay);
+
+            //przekazanie obiektu do form
+            EditLesson editLesson = new EditLesson();
+            editLesson.setGroupUniId(groupId);
+            model.addAttribute("lessonForm", editLesson);
         }
+
+
 
         return "editSchedule";
     }
@@ -91,6 +86,13 @@ public class ScheduleController {
         redirectAttributes.addAttribute("groupId", groupId);
         return "redirect:/schedule";
     }
+
+
+//    @PostMapping("/editLesson")
+//    public String editLesson(@ModelAttribute("lessonForm") EditLesson lessonForm, RedirectAttributes redirectAttributes) {
+//        System.out.println(lessonForm);
+//        return "redirect:/schedule";
+//    }
 
 
 //    @PostMapping("/deleteLesson")

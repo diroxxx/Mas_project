@@ -16,16 +16,16 @@ import java.util.Optional;
 public class TeacherService {
     private final TeacherRepository teacherRepository;
 
-    boolean isTeacherAvailable(Long id, String day, LocalTime startTime) {
-        if (id == null || startTime == null || day == null) {
-            throw new NullPointerException();
-        }
-        Optional<Teacher> teacher = teacherRepository.existTeacherInGivenTime(id, day, startTime);
-        if (teacher.isPresent()) {
-            return true;
-        }
-        return false;
-    }
+//    boolean isTeacherAvailable(Long id, String day, LocalTime startTime) {
+//        if (id == null || startTime == null || day == null) {
+//            throw new NullPointerException();
+//        }
+//        Optional<Teacher> teacher = teacherRepository.existTeacherInGivenTime(id, day, startTime);
+//        if (teacher.isPresent()) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
 //    public List<TeacherRepository.TeacherProjection> getAllTeachers()

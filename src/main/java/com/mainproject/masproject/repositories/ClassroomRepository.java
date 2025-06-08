@@ -17,12 +17,23 @@ public interface ClassroomRepository extends CrudRepository<Classroom, Long> {
 """)
     List<Classroom> getAllClassrooms();
 
+
     @Query("""
-    SELECT c FROM Classroom c
+SELECT CASE WHEN COUNT(a) = 0 THEN true ELSE false END    
+    FROM Classroom c
     JOIN c.holds ca
     JOIN ca.accessedBy a
-    WHERE c.id = :classId AND a.startTime = :startTime AND a.dayOfWeek = :day
+    WHERE c.id = :classId
+      AND a.startTime = :startTime
+      AND LOWER(a.dayOfWeek) = LOWER(:day)
+      AND a.id <> :assignmentId
 """)
-    Optional<Classroom> findConflictingClassroom(@Param("classId") Long classId, @Param("day") String day, @Param("startTime") LocalTime startTime);
+    boolean isClassroomAvailable(
+            @Param("classId") Long classId,
+            @Param("day") String day,
+            @Param("startTime") LocalTime startTime,
+            @Param("assignmentId") Long assignmentId
+    );
+
 
 }

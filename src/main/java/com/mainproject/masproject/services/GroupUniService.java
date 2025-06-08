@@ -19,13 +19,13 @@ public class GroupUniService {
     private final GroupUniRepository groupUniRepository;
 
 
-    public boolean isGroupUniAvailable(Long groupId, String dayOfWeek, LocalTime time) {
-        Optional<GroupUni> groupUni = groupUniRepository.findById(groupId);
-        if (groupUni.isPresent()) {
-            return groupUniRepository.isAvailable(groupId, dayOfWeek, time);
-        }
-        return false;
-    }
+//    public boolean isGroupUniAvailable(Long groupId, String dayOfWeek, LocalTime time) {
+//        Optional<GroupUni> groupUni = groupUniRepository.findById(groupId);
+//        if (groupUni.isPresent()) {
+//            return groupUniRepository.isAvailable(groupId, dayOfWeek, time);
+//        }
+//        return false;
+//    }
 
     public List<GroupUniDto> getAllGroups() {
         return groupUniRepository.findAll().stream()

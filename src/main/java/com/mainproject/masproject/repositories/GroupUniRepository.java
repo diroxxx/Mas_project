@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
 
     @Query("""
-    SELECT COUNT(*) > 0
+    SELECT COUNT(g) = 0
     FROM GroupUni g
     JOIN g.attendsIn a
     JOIN a.accessTo ca
@@ -23,11 +23,13 @@ public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
       AND lower(a.dayOfWeek) = lower(:day)
       AND a.startTime = :startTime
 """)
-    boolean isAvailable(
+    boolean isGroupUniAvailable(
             @Param("id") Long id,
             @Param("day") String day,
             @Param("startTime") LocalTime startTime
     );
+
+
 
     Optional<GroupUni> findById(Long id);
 
@@ -47,7 +49,8 @@ SELECT new com.mainproject.masproject.dtos.GroupLessonDto(
     ca.heldIn.roomNumber,
     c.id,
     c.capacity,
-    l.id
+    l.id,
+    a.id
 )
 FROM Assignment a
 JOIN a.scheduledBy l
@@ -57,7 +60,5 @@ join ca.heldIn c
 WHERE g.id = :groupId
 """)
     List<GroupLessonDto> getFullSchedule(@Param("groupId") Long groupId);
-
-
 
 }

@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
@@ -22,4 +23,10 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 //
 
 
+    @Query("""
+       select a from Assignment a
+       join a.scheduledBy l
+       where l.id = :lessonId and a.startTime =:startTime and lower(a.dayOfWeek) = lower(:dayOfWeek) 
+""")
+    public Optional<Assignment> findByLessonId(@Param("lessonId") Long lessonId, @Param("startTime") LocalTime startTime, @Param("dayOfWeek") String dayOfWeek);
 }

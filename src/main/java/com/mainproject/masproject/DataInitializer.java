@@ -174,21 +174,16 @@ public class DataInitializer {
 
                 //daodanie lekcji
                 Lesson lesson1 = new Lesson();
-                lesson1.setName("lesson1");
                 lesson1.setType(LessonType.EXERCISE);
                 lesson1.setBasedOn(subjectRealization1);
                 lesson1.setTaughtBy(teacher);
 
 
                 Lesson lesson2 = new Lesson();
-                lesson2.setName("lesson2");
                 lesson2.setType(LessonType.LECTURE);
                 lesson2.setBasedOn(subjectRealization2);
                 lesson2.setTaughtBy(teacher2);
 
-
-//                lessonRepository.saveAll(Set.of(lesson1, lesson2));
-//
                 subjectRealization1.getBasedFor().add(lesson1);
                 subjectRealization2.getBasedFor().add(lesson2);
 
@@ -201,14 +196,14 @@ public class DataInitializer {
 
                 Assignment assignment = new Assignment();
                 assignment.setDayOfWeek("Friday");
-                assignment.setStartTime(LocalTime.of(10, 0));
+                assignment.setStartTime(LocalTime.of(10, 15));
                 assignment.setScheduledBy(lesson1);
                 assignment.setAttendedBy(groupUni);
                 lesson1.getScheduledAs().add(assignment);
 
                 Assignment assignment2 = new Assignment();
                 assignment2.setDayOfWeek("Friday");
-                assignment2.setStartTime(LocalTime.of(12, 0));
+                assignment2.setStartTime(LocalTime.of(12, 15));
                 assignment2.setScheduledBy(lesson2);
                 assignment2.setAttendedBy(groupUni2);
                 lesson2.getScheduledAs().add(assignment2);
@@ -230,12 +225,10 @@ public class DataInitializer {
                 Classroom classroom = new Classroom();
                 classroom.setCapacity(23);
                 classroom.setRoomNumber("123A");
-//                classroomRepository.save(classroom);
 
                 Classroom classroom2 = new Classroom();
                 classroom2.setCapacity(25);
                 classroom2.setRoomNumber("111X");
-//                classroomRepository.save(classroom);
 
                 ClassActivity classActivity = new ClassActivity();
                 classActivity.setCreatedAt(LocalDate.of(2025, 3, 12));
@@ -264,6 +257,11 @@ public class DataInitializer {
 
             }catch (Exception e){
                 e.printStackTrace();
+            } finally {
+                assignmentRepository.findAll().forEach(a -> {
+                    System.out.println("Assignment " + a.getId() + ": " + a.getDayOfWeek() + " " + a.getStartTime());
+                });
+
             }
 
         }

@@ -1,16 +1,15 @@
 package com.mainproject.masproject.dtos;
 
 import com.mainproject.masproject.models.LessonType;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class EditLesson {
+public class CreateLessonDto {
+
     private Long groupUniId;
     private Long lessonId;
     private Long subjectId;
@@ -18,14 +17,7 @@ public class EditLesson {
     private String dayOfWeek;
     private String oldDayOfWeek;
     private LocalTime startTime;
-    private LocalTime oldStartTime;
     private Long classroomId;
     private LessonType typeOfLecture;
     private Long assignmentId;
-
-    private Long oldTeacherId;
-    private Long oldClassroomId;
-    private Long oldSubjectId;
-    private LessonType oldTypeOfLecture;
-
 }

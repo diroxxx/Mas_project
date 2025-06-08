@@ -18,17 +18,26 @@
 
                 <div class="lesson-icons">
                     <span class="edit-icon"
-                          th:attr="data-lesson-id=${lesson.lessonId},
+                          th:attr="
+               data-lesson-id=${lesson.lessonId},
                data-subject-id=${lesson.subjectId},
                data-teacher-id=${lesson.teacherId},
                data-day=${lesson.dayOfWeek},
                data-time=${lesson.startTime},
                data-classroom-id=${lesson.classId},
-               data-type=${lesson.lessonType}"
+               data-type=${lesson.lessonType},
+               data-assignment-id=${lesson.assignmentId}"
                           onclick="editLesson(this)">
                         ✏️
                     </span>
-                    <span class="delete-icon">🗑️</span>
+
+<!--                    <form th:action="@{/schedule/deleteLesson}" th:object="${deleteLesson}" method="post" style="display: inline;">-->
+<!--                        <input type="hidden"  th:value="${lesson.lessonId}"  th:field="*{lessonIdToDelete}"/>-->
+<!--                        <input type="hidden"  th:value="${lesson.startTime}"  th:field="*{startTimeToDelete}"/>-->
+<!--                        <input type="hidden"  th:value="${lesson.dayOfWeek}"  th:field="*{dayOfWeekToDelete}"/>-->
+<!--                        <input type="hidden"  th:value="${lesson.classroomId}"  th:field="*{classroomIdToDelete}"/>-->
+<!--                        <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć lekcję?')">🗑️</button>-->
+<!--                    </form>-->
                 </div>
 
 

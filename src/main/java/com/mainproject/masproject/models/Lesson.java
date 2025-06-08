@@ -18,10 +18,6 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Size(max = 50)
-    private String name;
-
     @Enumerated(EnumType.ORDINAL)
     @NotNull
     private LessonType type;
@@ -33,12 +29,12 @@ public class Lesson {
     private Set<Assignment> scheduledAs = new HashSet<>();
 
     @ManyToOne
-    @NotNull
+//    @NotNull
     @JoinColumn(name = "subject_realization_id" , nullable = false)
     private SubjectRealization basedOn;
 
     @ManyToOne
-    @NotNull
+//    @NotNull
     @JoinColumn(name = "teacher_id", nullable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

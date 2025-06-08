@@ -124,6 +124,7 @@ button:hover {
     padding: 10px;
     background-color: rgba(68, 68, 68, 0.42);
     border-radius: 10px;
+
 }
 
 .form-edit form .form-group {
@@ -135,7 +136,7 @@ button:hover {
 .form-group label {
     font-weight: 500;
     margin-bottom: 4px;
-    color: #444;
+    color: #BAE9E6;
 }
 
 .form-group select {
@@ -153,4 +154,26 @@ button:hover {
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
     outline: none;
     background-color: #f9f9f9;
+}
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+.btn:hover {
+    background-color: #218838;
+}
+
+
+.error-summary {
+    background-color: #ffdddd;
+    color: #a94442;
+    border: 1px solid #a94442;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
 }

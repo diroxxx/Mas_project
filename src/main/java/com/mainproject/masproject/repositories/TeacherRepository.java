@@ -14,18 +14,23 @@ import java.util.Optional;
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
 
-
-
-
-
-
     @Query("""
-       select t from Teacher t
-       join t.teaches l
-       join l.scheduledAs a
-       where t.id =:id and a.dayOfWeek =:day and a.startTime=: startTime
+    SELECT CASE WHEN COUNT(a) = 0 THEN true ELSE false END
+    FROM Teacher t
+    JOIN t.teaches l
+    JOIN l.scheduledAs a
+    WHERE t.id = :id
+      AND a.dayOfWeek = :day
+      AND a.startTime = :startTime
+      AND a.id <> :assignmentId
 """)
-    Optional<Teacher> existTeacherInGivenTime(@Param("id") Long id,@Param("day") String day,@Param("startTime") LocalTime startTime);
+
+    boolean isTeacherAvailable(
+            @Param("id") Long teacherId,
+            @Param("day") String day,
+            @Param("startTime") LocalTime startTime,
+            @Param("assignmentId") Long assignmentId
+    );
 
     @Query("""
     SELECT t.id AS id, CONCAT(p.firstName, ' ', p.lastName) AS fullName

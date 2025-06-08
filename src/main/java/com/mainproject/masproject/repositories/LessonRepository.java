@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
@@ -15,5 +16,8 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     select  distinct l.type from Lesson l
 """)
     public List<LessonType> getAllTypes();
+
+
+    public Optional<LessonType> findTypeById(Long id);
 
 }

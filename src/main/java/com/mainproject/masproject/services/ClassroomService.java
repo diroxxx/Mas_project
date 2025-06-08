@@ -14,9 +14,9 @@ import java.util.Optional;
 public class ClassroomService {
     private final ClassroomRepository classroomRepository;
 
-
-    boolean isClassroomAvailable( Long classId, String day, LocalTime startTime) {
-        Optional<Classroom> conflictingClassroom = classroomRepository.findConflictingClassroom(classId, day, startTime);
-        return conflictingClassroom.isPresent();
-    }
+//
+//    boolean isClassroomAvailable( Long classId, String day, LocalTime startTime) {
+//        Optional<Classroom> conflictingClassroom = classroomRepository.findConflictingClassroom(classId, day, startTime);
+//        return conflictingClassroom.isPresent();
+//    }
 }

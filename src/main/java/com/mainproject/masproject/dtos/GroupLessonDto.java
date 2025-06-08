@@ -28,6 +28,7 @@ public class GroupLessonDto {
     private final String roomNumber;
     private final int roomCapacity;
     private final Long lessonId;
+    private final Long assignmentId;
 
 
     public GroupLessonDto(Long subjectId, String subjectName,
@@ -35,7 +36,7 @@ public class GroupLessonDto {
                           LessonType lessonType, int groupCapacity,
                           String dayOfWeek, LocalTime startTime,
                           String roomNumber,Long classId, int roomCapacity,
-                          Long lessonId) {
+                          Long lessonId, Long assignmentId) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.teacherId = teacherId;
@@ -48,6 +49,7 @@ public class GroupLessonDto {
         this.classId = classId;
         this.roomCapacity = roomCapacity;
         this.lessonId = lessonId;
+        this.assignmentId = assignmentId;
         this.endTime = startTime.plusMinutes((long) Assignment.getDurationInMinutes());
     }
 }

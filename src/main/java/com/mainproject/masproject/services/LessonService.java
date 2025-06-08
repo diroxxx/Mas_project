@@ -7,6 +7,7 @@ import com.mainproject.masproject.models.*;
 import com.mainproject.masproject.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
@@ -26,6 +27,8 @@ public class LessonService {
     private final AssignmentRepository assignmentRepository;
     private final ClassroomRepository classroomRepository;
     private final ClassActivityRepository classActivityRepository;
+    private final SubjectRepository subjectRepository;
+    private final SubjectRealizationRepository subjectRealizationRepository;
 
 
     List<LessonType> getAllTypes() {
@@ -62,7 +65,7 @@ public class LessonService {
         Teacher teacher = teacherRepository.findById(editLesson.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found"));
 
-        SubjectRealization realization = realizationRepository.findBySubjectId(editLesson.getSubjectId())
+        SubjectRealization subjectRealization = realizationRepository.findBySubjectId(editLesson.getSubjectId())
                 .orElseThrow(() -> new RuntimeException("SubjectRealization not found"));
 
         Assignment assignment = assignmentRepository.findByLessonId(
@@ -77,23 +80,38 @@ public class LessonService {
         GroupUni groupUni = groupUniRepository.findById(editLesson.getGroupUniId())
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
-        ClassActivity activity = classActivityRepository.findClassActivity(editLesson.getClassroomId(), assignment.getId())
+        ClassActivity activity = classActivityRepository.findClassActivity(editLesson.getOldClassroomId(), assignment.getId())
                         .orElseThrow(() -> new RuntimeException("ca not found"));
 
+        Subject subject = subjectRepository.findById(editLesson.getSubjectId()).orElseThrow(() -> new RuntimeException("Subject not found"));
+        System.out.println("new subject: " + subject.getId() );
+        System.out.println("old: " + editLesson.getOldSubjectId());
+        if (!editLesson.getOldSubjectId().equals(subject.getId())) {
+            subjectRealization.setIncludedBy(subject);
+            lesson.setBasedOn(subjectRealization);
+        }
+        if (!editLesson.getOldTeacherId().equals(editLesson.getTeacherId())) {
+            lesson.setTaughtBy(teacher);
 
-        lesson.setTaughtBy(teacher);
-        lesson.setType(editLesson.getTypeOfLecture());
+        }
+        if (!editLesson.getOldClassroomId().equals(editLesson.getClassroomId())) {
+            activity.setHeldIn(classroom);
+        }
+        if (!editLesson.getOldStartTime().equals(editLesson.getStartTime())) {
+            assignment.setStartTime(editLesson.getStartTime());
+        }
+        if (!editLesson.getOldDayOfWeek().equals(editLesson.getDayOfWeek())) {
+            assignment.setDayOfWeek(editLesson.getDayOfWeek());
+        }
+        if(!editLesson.getOldTypeOfLecture().equals(editLesson.getTypeOfLecture())) {
+            lesson.setType(editLesson.getTypeOfLecture());
+        }
 
-        assignment.setStartTime(editLesson.getStartTime());
-        assignment.setDayOfWeek(editLesson.getDayOfWeek());
-        assignment.setAttendedBy(groupUni);
+        subjectRealizationRepository.save(subjectRealization);
 
-
-        activity.setHeldIn(classroom);
-
-        classActivityRepository.save(activity);
-        assignmentRepository.save(assignment);
-        lessonRepository.save(lesson);
+//        classActivityRepository.save(activity);
+//        assignmentRepository.save(assignment);
+//        lessonRepository.save(lesson);
 
     }
 
@@ -101,6 +119,7 @@ public class LessonService {
     @Transactional
     public void createLesson(CreateLessonDto createLessonDto) {
 
+        System.out.println(createLessonDto);
         GroupUni group = groupUniRepository.findById(createLessonDto.getGroupUniId())
                 .orElseThrow(() -> new RuntimeException("Grupa nie istnieje"));
 
@@ -139,20 +158,54 @@ public class LessonService {
 
     @Transactional
   public void deleteLesson(DeleteLessonDto deleteLessonDto){
+        System.out.println(deleteLessonDto);
+
         Lesson lesson = lessonRepository.findById(deleteLessonDto.getLessonIdToDelete())
                 .orElseThrow(() -> new RuntimeException("Lekcja nie znaleziona"));
 
 
-        Assignment assignment = assignmentRepository.findByLessonId(deleteLessonDto.getClassroomIdToDelete(), deleteLessonDto.getStartTimeToDelete(), deleteLessonDto.getDayOfWeekToDelete()).orElseThrow();
-
-            ClassActivity activities = classActivityRepository.findClassActivity(deleteLessonDto.getClassroomIdToDelete(), assignment.getId()).orElseThrow();
-            classActivityRepository.delete(activities);
-
-
-        assignmentRepository.delete(assignment);
+        Assignment assignment = assignmentRepository
+                .findById(deleteLessonDto.getAssignmentToDelete())
+                .orElseThrow(() -> new RuntimeException("Assignment nieznaleziona"));
+        System.out.println(assignment.getId());   // powinno wypisać 2
 
 
+        ClassActivity activity = classActivityRepository.findClassActivity(
+                deleteLessonDto.getClassroomIdToDelete(),
+                assignment.getId())
+                .orElseThrow(() -> new RuntimeException("nie znaleziona a"));
+        System.out.println(activity.getId());
+
+        Classroom classroom = classroomRepository.
+                findById(deleteLessonDto.getClassroomIdToDelete())
+                .orElseThrow(() -> new RuntimeException("Sala nie znaleziona"));
+        System.out.println(classroom.getId());
+
+//        if (activity.getHeldIn() != null)
+//            activity.getHeldIn().getHolds().remove(activity);
+//        if (assignment.getAccessTo() != null)
+//            assignment.getAccessTo().remove(activity);
+//        if (lesson.getScheduledAs() != null)
+//            lesson.getScheduledAs().remove(assignment);
+//
+//        activity.setHeldIn(null);
+//        activity.setAccessedBy(null);
+//
+//        assignment.setScheduledBy(null);
+//        assignment.setAttendedBy(null);
+//
+//        if (lesson.getTaughtBy() != null)
+//            lesson.getTaughtBy().getTeaches().remove(lesson);
+//        if (lesson.getBasedOn() != null)
+//            lesson.getBasedOn().getBasedFor().remove(lesson);
+
+        // Usuwanie
+//        classActivityRepository.delete(activity);
+//        assignmentRepository.delete(assignment);
         lessonRepository.delete(lesson);
-   }
+
+//        lessonRepository.flush();
+
+    }
 
 }

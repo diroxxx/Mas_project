@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
+@Builder
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,11 +21,15 @@ public class Lesson {
     @Enumerated(EnumType.ORDINAL)
     @NotNull
     private LessonType type;
+    @Column(name = "is_lead", nullable = false)
+    private boolean lead;
 
-    @OneToMany(mappedBy = "scheduledBy", cascade = CascadeType.REMOVE)
-    @NotNull
+
+    @OneToMany(mappedBy = "scheduledBy", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @NotNull
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @Builder.Default
     private Set<Assignment> scheduledAs = new HashSet<>();
 
     @ManyToOne

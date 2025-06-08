@@ -20,14 +20,16 @@ public class DeanOfficeEmployee {
     private Long id;
 
 
-
-
     @ElementCollection
     @CollectionTable(name = "responsibilities", joinColumns = @JoinColumn(name = "dean_office_employee_id"))
     private List<String> responsibilities = new ArrayList<>();
 
+    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "employee_id", updatable = false, nullable = false)
     private Employee employeeDean;
+
+//    void setEmployee(Employee employee) { this.employeeDean = employee; }
+
 
 }

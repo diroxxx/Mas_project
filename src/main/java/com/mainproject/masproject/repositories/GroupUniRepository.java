@@ -33,8 +33,6 @@ public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
 
     Optional<GroupUni> findById(Long id);
 
-
-
     @Query("""
 SELECT new com.mainproject.masproject.dtos.GroupLessonDto(
     l.basedOn.includedBy.id,

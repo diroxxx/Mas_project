@@ -22,10 +22,12 @@ public class EditLesson {
     private Long classroomId;
     private LessonType typeOfLecture;
     private Long assignmentId;
+//    private String code;
 
     private Long oldTeacherId;
     private Long oldClassroomId;
     private Long oldSubjectId;
     private LessonType oldTypeOfLecture;
+
 
 }

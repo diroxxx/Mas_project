@@ -12,19 +12,19 @@
         <div>
             <label for="group-select">Student groups</label>
             <select id="group-select" name="groupId" required>
-                <option value="" disabled selected>Wybierz grupę</option>
+                <option th:value="${selectedGroupId}" disabled selected>Choose group</option>
                 <th:block th:each="group : ${groups}">
                     <option th:value="${group.id}" th:text="${group.name}"></option>
                 </th:block>
             </select>
         </div>
 
-        <button type="submit">Find</button>
+        <button class="submit" type="submit" >Find</button>
     </form>
 </div>
-<div id="create-form-container">
-    <button onclick="toggleCreateForm(this)">Utwórz nowe zajęcia</button>
-    <div th:replace="fragments/lesson-form-create :: createForm"></div>
+<div th:if="${selectedGroupId != null}" id="create-form-container">
+    <button class="submit"  onclick="toggleCreateForm(this)" >Create new Lesson</button>
+    <div id="create-form" th:replace="fragments/lesson-form-create :: createForm"></div>
 </div>
 
 <div th:each="entry : ${lessonsByDay}">
@@ -38,107 +38,18 @@
 </div>
 <div th:replace="fragments/lesson-form-edit :: editForm"></div>
 
-<!--<div class="form-edit" id="edit-form" style="display: none;">-->
-<!--    <form method="post" id="edit-lesson-form" th:action="@{/schedule/editLesson}" th:object="${lessonForm}">-->
-<!--        <input type="hidden" name="lessonId" id="lessonId" />-->
-<!--        <input type="hidden" th:field="*{groupUniId}" />-->
-<!--        <input type="hidden" th:field="*{oldDayOfWeek}" />-->
-<!--        <input type="hidden" th:field="*{oldStartTime}" />-->
-<!--        <input type="hidden" th:field="*{assignmentId}" />-->
-<!--        <input type="hidden" th:field="*{oldTeacherId}" />-->
-<!--        <input type="hidden" th:field="*{oldClassroomId}" />-->
-<!--        <input type="hidden" th:field="*{oldSubjectId}" />-->
-<!--        <input type="hidden" th:field="*{oldTypeOfLecture}" />-->
-
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="subjectId">Subject</label>-->
-<!--            <select  th:field="*{subjectId}" required>-->
-<!--                <option value="" disabled >choose subject</option>-->
-<!--                <th:block th:each="subject : ${subjects}">-->
-<!--                    <option th:value="${subject.id}" th:text="${subject.name}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="teacherId">Teacher</label>-->
-<!--            <select name="teacherId" th:field="*{teacherId}"  required>-->
-<!--                <option value="" disabled selected>choose teacher</option>-->
-<!--                <th:block th:each="teacher : ${teachers}">-->
-<!--                    <option th:value="${teacher.id}" th:text="${teacher.getFullName}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="dayOfWeek">Day of Week</label>-->
-<!--            <select th:field="*{dayOfWeek}" required>-->
-<!--                <option value="" disabled selected>choose dayOfWeek</option>-->
-<!--                <th:block th:each="dayOfTheWeek : ${daysOfWeek}">-->
-<!--                    <option th:value="${dayOfTheWeek}" th:text="${dayOfTheWeek}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="startTime">Start Time</label>-->
-<!--            <select  th:field="*{startTime}" required>-->
-<!--                <option value="" disabled selected>Choose time</option>-->
-<!--                <th:block th:each="timeslot : ${timeSlots}">-->
-<!--                    <option th:value="${timeslot}"-->
-<!--                            th:text="${timeslot}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="classroomId">Classroom</label>-->
-<!--            <select  th:field="*{classroomId}" required>-->
-<!--                <option value="" disabled selected >choose Classroom</option>-->
-<!--                <th:block th:each="classroom : ${classrooms}">-->
-<!--                    <option th:value="${classroom.id}" th:text="${classroom.roomNumber}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--            <label th:for="typesOfLecture">Type</label>-->
-<!--            <select th:field="*{typeOfLecture}" required>-->
-<!--                <option value="" disabled selected >Choose type</option>-->
-<!--                <th:block th:each="typeOfLecture : ${typesOfLecture}">-->
-<!--                    <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>-->
-<!--                </th:block>-->
-<!--            </select>-->
-<!--            <button type="submit">Change</button>-->
-<!--        </div>-->
-
-
-<!--        <div th:if="${#fields.hasErrors('*')}" class="error-summary">-->
-<!--            <ul>-->
-<!--                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>-->
-<!--            </ul>-->
-<!--        </div>-->
-
-<!--&lt;!&ndash;        <p th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err.defaultMessage}" class="error-message"></p>&ndash;&gt;-->
-
-
-<!--    </form>-->
-
-<!--</div>-->
-
-
-    <h1 th:if="${lessonsByDay == null or #maps.isEmpty(lessonsByDay)}">
-        dana grupa nie posiada zajęć
-    </h1>
-
+<h1 th:if="${(lessonsByDay == null or #maps.isEmpty(lessonsByDay)) or selectedGroupId != null }">
+        This group has no classes
+</h1>
+<h1 th:if="${selectedGroupId != null}">
+    Please select a group to schedule
+</h1>
 
 <script>
     function editLesson(el) {
         const form = document.getElementById('edit-form');
 
 
-        // Jeśli już wyświetlony pod tym samym dniem — schowaj
         if (form.style.display === "flex" && el.classList.contains("active-edit")) {
             form.style.display = "none";
             el.classList.remove("active-edit");
@@ -176,31 +87,17 @@
         }
     }
 
-    // function showCreateForm(el) {
-    //     const form = document.getElementById('create-form');
-    //
-    //     if (form.style.display === "flex" && el.classList.contains("active-create")) {
-    //         form.style.display = "none";
-    //         el.classList.remove("active-create");
-    //         return;
-    //     }
-    //
-    //     document.querySelectorAll(".active-create").forEach(btn => btn.classList.remove("active-create"));
-    //     el.classList.add("active-create");
-    //
-    //     const createSpace = document.getElementById('create-form-container');
-    //     if (createSpace) {
-    //         createSpace.appendChild(form);
-    //         form.style.display = 'flex';
-    //         form.scrollIntoView({ behavior: 'smooth' });
-    //     }
-    // }
-
-    function toggleCreateForm(el) {
+    function toggleCreateForm() {
         const form = document.getElementById("create-form");
-        form.style.display = form.style.display === "flex" ? "none" : "flex";
+        form.style.display = (form.style.display === "flex") ? "none" : "flex";
     }
 
+
+    document.addEventListener("DOMContentLoaded", () => {
+        if (document.querySelector("#create-form .field-error")) {
+            document.getElementById("create-form").style.display = "flex";
+        }
+    });
 
 
 </script>

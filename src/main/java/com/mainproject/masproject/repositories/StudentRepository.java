@@ -7,6 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface StudentRepository extends CrudRepository<Student, Long> {
 
+
+
+
     @Query("""
     select case when count(s) = 0 then true else false end 
     from Student s 

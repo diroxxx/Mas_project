@@ -11,7 +11,8 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Student {
     @Id
@@ -34,6 +35,9 @@ public class Student {
         this.index = index;
         this.tuitionBalance = tuitionBalance;
     }
+    void setPerson(Person person) { this.personStudent = person; }
+
+
 
     public void graduate() {
         this.status = StudentStatus.GRADUATED;
@@ -62,11 +66,9 @@ public class Student {
         this.status = StudentStatus.WITHDRAWN;
     }
 
-
+//    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "person_id", updatable = false, nullable = false)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Person personStudent;
 
 

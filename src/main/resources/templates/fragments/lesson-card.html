@@ -1,18 +1,17 @@
 <div th:fragment="lessonCard(lesson)">
     <div class="lesson" th:classappend="${lesson.lessonType.name()  == 'LECTURE'} ? ' lecture-block' : ' exercise-block'">
 
-<!--            <div class="lesson-content">-->
                 <div class="lesson-header">
-                    <strong th:text="|${#temporals.format(lesson.startTime, 'HH:mm')}-${#temporals.format(lesson.endTime, 'HH:mm')}|">
+                    <strong class="time-lesson" th:text="|${#temporals.format(lesson.startTime, 'HH:mm')}-${#temporals.format(lesson.endTime, 'HH:mm')}|">
                         10:00–11:30
                     </strong>
                     <span class="badge" th:text="${lesson.lessonType}">LECTURE</span>
                 </div>
 
                 <div class="lesson-info">
-                    <span th:text="${lesson.subjectName}">subject</span><br/>
-                    <span th:text="${lesson.teacherName}">teacher</span><br>
-                    <span th:text="'Classroom: ' + ${lesson.roomNumber}">Classroom: 123_c</span><br/>
+                    <span class="subject-name"  th:text="${lesson.subjectName}">subject</span>
+                    <span class="teacher-name" th:text="${lesson.teacherName}">teacher</span>
+                    <span th:text="'Classroom: ' + ${lesson.roomNumber}">Classroom: 123_c</span>
                     <span th:text="'students: ' + ${lesson.groupCapacity} + '/' + ${lesson.roomCapacity} ">students: 20</span>
                 </div>
 
@@ -28,18 +27,20 @@
                data-type=${lesson.lessonType},
                data-assignment-id=${lesson.assignmentId}"
                           onclick="editLesson(this)">
-                        ✏️
+                    <img th:src="@{/css/image/edit.svg}" alt="Edit"/>
                     </span>
 
-<!--                    <form th:action="@{/schedule/deleteLesson}" th:object="${deleteLesson}" method="post" style="display: inline;">-->
-<!--                        <input type="hidden"  th:value="${lesson.lessonId}"  th:field="*{lessonIdToDelete}"/>-->
-<!--                        <input type="hidden"  th:value="${lesson.startTime}"  th:field="*{startTimeToDelete}"/>-->
-<!--                        <input type="hidden"  th:value="${lesson.dayOfWeek}"  th:field="*{dayOfWeekToDelete}"/>-->
-<!--                        <input type="hidden"  th:value="${lesson.classroomId}"  th:field="*{classroomIdToDelete}"/>-->
-<!--                        <button type="submit" onclick="return confirm('Czy na pewno chcesz usunąć lekcję?')">🗑️</button>-->
-<!--                    </form>-->
-                </div>
+                    <form th:action="@{/schedule/deleteLesson}" th:object="${deleteLesson}" method="post" style="display: inline;">
+                        <input type="hidden" name="lessonIdToDelete" th:value="${lesson.lessonId}" />
+                        <input type="hidden" name="startTimeToDelete" th:value="${lesson.startTime}" />
+                        <input type="hidden" name="dayOfWeekToDelete" th:value="${lesson.dayOfWeek}" />
+                        <input type="hidden" name="classroomIdToDelete" th:value="${lesson.classId}" />
+                        <input type="hidden" name="assignmentToDelete" th:value="${lesson.assignmentId}" />
 
+                        <button class="icon-btn" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć lekcję?')"><img th:src="@{/css/image/bin.svg}" alt="Edit"/>
+                            </button>
+                    </form>
+                </div>
 
     </div>
 

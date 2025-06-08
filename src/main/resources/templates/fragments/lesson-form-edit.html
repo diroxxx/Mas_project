@@ -8,7 +8,7 @@
           method="post"
           >
 
-        <input type="hidden" th:field="*{lessonId}"  name="lessonId" id="lessonId" />
+        <input type="hidden" th:field="*{lessonId}"/>
         <input type="hidden" th:field="*{groupUniId}" />
         <input type="hidden" th:field="*{oldDayOfWeek}" />
         <input type="hidden" th:field="*{oldStartTime}" />
@@ -78,7 +78,7 @@
                     <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>
                 </th:block>
             </select>
-            <button type="submit">Update</button>
+            <button class="submit" type="submit">Update</button>
         </div>
 
 

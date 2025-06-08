@@ -6,11 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Person {
     @Id
@@ -37,11 +41,37 @@ public class Person {
     private int phoneNumber;
 
     @OneToOne(mappedBy = "personStudent", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Student student;
 
     @OneToOne(mappedBy = "personEmployee" , cascade = CascadeType.ALL)
     private Employee personEmployee;
+
+
+    @Builder
+    private Person(String firstName,
+                   String lastName,
+                   String email,
+                   String pesel,
+                   Integer phoneNumber,
+                   Student student,
+                   Employee employee) {
+
+        this.firstName   = firstName;
+        this.lastName    = lastName;
+        this.email       = email;
+        this.pesel       = pesel;
+        this.phoneNumber = phoneNumber;
+
+        this.student  = Objects.requireNonNull(student);
+        this.personEmployee = Objects.requireNonNull(employee);
+
+        student.setPersonStudent(this);
+        employee.setPersonEmployee(this);
+    }
+
+    public String    getIndexNumber()   { return student.getIndex(); }
+    public LocalDate getHireDate()      { return personEmployee.getHireDate();  }
+
+
 
 }

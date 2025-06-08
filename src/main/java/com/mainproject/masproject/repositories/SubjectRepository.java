@@ -12,7 +12,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
 
     @Query("""
-    Select count(s) > 0 from Subject s
+    Select count(s) = 0 from Subject s
     where s.code =: code
 """)
     boolean checkCodeUnique(@Param("code") String code);

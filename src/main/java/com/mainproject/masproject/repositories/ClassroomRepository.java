@@ -26,7 +26,7 @@ SELECT CASE WHEN COUNT(a) = 0 THEN true ELSE false END
     WHERE c.id = :classId
       AND a.startTime = :startTime
       AND LOWER(a.dayOfWeek) = LOWER(:day)
-      AND a.id <> :assignmentId
+      AND (:assignmentId IS NULL OR a.id <> :assignmentId)
 """)
     boolean isClassroomAvailable(
             @Param("classId") Long classId,
@@ -34,6 +34,4 @@ SELECT CASE WHEN COUNT(a) = 0 THEN true ELSE false END
             @Param("startTime") LocalTime startTime,
             @Param("assignmentId") Long assignmentId
     );
-
-
 }

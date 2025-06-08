@@ -35,6 +35,23 @@ public class DataInitializer {
         if (personRepository.count() == 0 ) {
 
             try {
+
+
+
+//                Person p = Person.builder()
+//                        .firstName("Anna").lastName("Nowak")
+//                        .email("a@uni.pl").pesel("92012345678")
+//                        .student(new Student("s12345", 2000))
+//                        .personEmployee(
+//                                Employee.builder()
+//                                        .hireDate(LocalDate.now())
+//                                        .teacher(new Teacher())
+//                                        .deanOfficeEmployee(new DeanOfficeEmployee())
+//                                        .build())
+//                        .build();
+//
+//                personRepository.save(p);
+
                 Person person = Person.builder()
                         .pesel("12312312311")
                         .firstName("Tomek")
@@ -54,6 +71,7 @@ public class DataInitializer {
                         .personEmployee(person)
                         .build();
                 employeeRepository.save(employee);
+
                 Teacher teacher = Teacher.builder()
                         .academicTitles(List.of("prof", "mgr"))
                         .employeeTeacher(employee)
@@ -82,9 +100,6 @@ public class DataInitializer {
                 employee2.setTeacher(teacher2);
                 teacher2.setEmployeeTeacher(employee2);
                 personRepository.save(person2);
-//                employeeRepository.save(employee2);
-//                teacherRepository.save(teacher2);
-
 
 
                 GroupUni groupUni = new GroupUni();
@@ -104,9 +119,6 @@ public class DataInitializer {
                 employeeRepository.save(employee);
                 personRepository.save(person);
 
-
-
-//                subjectRepository.save(math);
 
                 Semester semester1 = new Semester();
                 semester1.setCode("2025/2026");
@@ -166,17 +178,16 @@ public class DataInitializer {
                 groupUni2.setCapacity(20);
                 groupUni2.addStudent(student);
                 groupUniRepository.save(groupUni2);
-//                groupUni2.setSubmitedBy(Map.of(student.getIndex(), student));
 
-
-//                student.getSubmitTo().add(groupUni2);
-//                studentRepository.save(student);
 
                 //daodanie lekcji
                 Lesson lesson1 = new Lesson();
                 lesson1.setType(LessonType.EXERCISE);
                 lesson1.setBasedOn(subjectRealization1);
                 lesson1.setTaughtBy(teacher);
+
+//                teacher.promoteToLead(lesson1);
+                teacher.getTeaches().add(lesson1);
 
 
                 Lesson lesson2 = new Lesson();
@@ -187,8 +198,7 @@ public class DataInitializer {
                 subjectRealization1.getBasedFor().add(lesson1);
                 subjectRealization2.getBasedFor().add(lesson2);
 
-                teacher.setTeaches(Set.of(lesson1));
-                teacher2.setTeaches(Set.of(lesson2));
+                teacher2.getTeaches().add(lesson2);
                 teacherRepository.saveAll(List.of(teacher, teacher2));
                 lessonRepository.saveAll(List.of(lesson1, lesson2));
 

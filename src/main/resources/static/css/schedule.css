@@ -1,3 +1,202 @@
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    margin: 40px;*/
+/*    background-color: #BAE9E6;*/
+/*}*/
+
+/*h3 {*/
+/*    background-color: #d3d3d3;*/
+/*    padding: 10px 15px;*/
+/*    border-radius: 8px;*/
+/*    margin-top: 30px;*/
+/*}*/
+
+/*form {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    margin-bottom: 30px;*/
+/*    gap: 10px;*/
+/*}*/
+
+/*select, button {*/
+/*    padding: 8px 12px;*/
+/*    font-size: 16px;*/
+/*}*/
+
+
+/*.container-group-form {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin-top: 30px;*/
+/*}*/
+
+/*.lesson-container {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 50px;*/
+/*    padding: 20px;*/
+/*    background-color: dimgrey;*/
+/*    border-radius: 20px;*/
+/*}*/
+
+/*.lesson {*/
+/*    flex: 1 1 300px;*/
+/*    min-width: 250px;*/
+/*    max-width: 300px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    padding: 10px;*/
+/*    border-radius: 10px;*/
+/*    margin: 10px 0;*/
+/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);*/
+/*}*/
+
+/*.lecture-block {*/
+/*    background-color: #B8F4B8;*/
+/*}*/
+
+/*.exercise-block {*/
+/*    background-color: #57B1E9;*/
+/*}*/
+
+/*.lesson-header {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    width: 100%;*/
+/*}*/
+/*.lesson {*/
+/*    display: flex;*/
+/*    width: 100%;*/
+/*}*/
+
+/*.badge {*/
+/*    background-color: #444;*/
+/*    color: white;*/
+/*    padding: 4px 10px;*/
+/*    border-radius: 10px;*/
+/*    font-size: 14px;*/
+/*    font-weight: bold;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.lesson-icons {*/
+/*    display: flex;*/
+/*    gap: 12px;*/
+/*    font-size: 20px;*/
+/*}*/
+
+/*.lesson-icons span {*/
+/*    cursor: pointer;*/
+/*    transition: transform 0.2s;*/
+/*}*/
+
+/*.lesson-icons span:hover {*/
+/*    transform: scale(1.2);*/
+/*}*/
+
+/*.form-edit form {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 1rem;*/
+/*    align-items: flex-start;*/
+/*    padding: 10px;*/
+/*    background-color: rgba(68, 68, 68, 0.42);*/
+/*    border-radius: 10px;*/
+/*}*/
+
+/*.form-edit form .form-group {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 200px;*/
+/*}*/
+
+/*.form-group label {*/
+/*    font-weight: 500;*/
+/*    margin-bottom: 4px;*/
+/*    color: #BAE9E6;*/
+/*}*/
+/*.form-create label {*/
+/*    font-weight: 500;*/
+/*    margin-bottom: 4px;*/
+/*    color: #BAE9E6;*/
+/*}*/
+/*.form-create form .form-group {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 200px;*/
+/*}*/
+/*.form-create  form {*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*    gap: 1rem;*/
+/*    align-items: flex-start;*/
+/*    padding: 10px;*/
+/*    background-color: rgba(68, 68, 68, 0.42);*/
+/*    border-radius: 10px;*/
+
+/*}*/
+
+
+/*.form-group select {*/
+/*    padding: 8px;*/
+/*    font-size: 14px;*/
+/*    border-radius: 6px;*/
+/*    border: 1px solid #ccc;*/
+/*    background-color: #fff;*/
+/*    color: #333;*/
+/*    transition: border-color 0.2s ease, box-shadow 0.2s ease;*/
+/*}*/
+
+/*.form-group select:focus {*/
+/*    border-color: #007bff;*/
+/*    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);*/
+/*    outline: none;*/
+/*    background-color: #f9f9f9;*/
+/*}*/
+/*.submit {*/
+/*    display: inline-block;*/
+/*    padding: 8px 16px;*/
+/*    background-color: #28a745;*/
+/*    color: white;*/
+/*    text-decoration: none;*/
+/*    border-radius: 6px;*/
+/*    font-weight: bold;*/
+/*}*/
+/*.submit:hover {*/
+/*    background-color: #218838;*/
+/*}*/
+
+/*.error-summary {*/
+/*    background-color: #ffdddd;*/
+/*    color: #a94442;*/
+/*    border: 1px solid #a94442;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+
+/*!*przyciski*!*/
+/*.submit {*/
+/*    background-color: #28a745;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 6px;*/
+/*    cursor: pointer;*/
+/*}*/
+/*.submit:hover {*/
+/*    background-color: #218838;*/
+/*}*/
+
+
+
+/* ------------------------------------------------------------------ */
+/* 1. Ustawienia globalne                                             */
+/* ------------------------------------------------------------------ */
 body {
     font-family: Arial, sans-serif;
     margin: 40px;
@@ -11,7 +210,6 @@ h3 {
     margin-top: 30px;
 }
 
-/* === FORMULARZE OGÓLNE === */
 form {
     display: flex;
     align-items: center;
@@ -19,24 +217,15 @@ form {
     gap: 10px;
 }
 
-select, button {
+select,
+button {
     padding: 8px 12px;
     font-size: 16px;
 }
 
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* === CONTAINERY === */
+/* ------------------------------------------------------------------ */
+/* 2. Kontenery ogólne                                                */
+/* ------------------------------------------------------------------ */
 .container-group-form {
     display: flex;
     flex-direction: column;
@@ -48,75 +237,109 @@ button:hover {
 .lesson-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 50px;
     padding: 20px;
     background-color: dimgrey;
     border-radius: 20px;
 }
 
-/* === KARTY ZAJĘĆ === */
+/* ------------------------------------------------------------------ */
+/* 3. Karta lekcji                                                    */
+/* ------------------------------------------------------------------ */
 .lesson {
+    /* rozmiar i elastyczność w siatce */
     flex: 1 1 300px;
-    min-width: 250px;
+    min-width: 200px;
     max-width: 300px;
+
+    /* układ wewnętrzny w kolumnie */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 0.75rem;
+
     padding: 10px;
     border-radius: 10px;
     margin: 10px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    background-color: #fff;
 }
 
-.lecture-block {
-    background-color: #B8F4B8;
-}
+/* warianty kolorystyczne */
+.lecture-block  { background-color: #B8F4B8;}
+.exercise-block { background-color: #57B1E9;}
 
-.exercise-block {
-    background-color: #57B1E9;
-}
 
-/* === NAGŁÓWEK LEKCJI === */
 .lesson-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-.lesson {
-    display: flex;
-    width: 100%;
+
+.lesson-header strong {
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
-/* === BADGE === */
 .badge {
     background-color: #444;
     color: white;
     padding: 4px 10px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 0.75rem;
     font-weight: bold;
+    letter-spacing: .05em;
     text-align: center;
 }
 
-/* === IKONY === */
-.lesson-icons {
-    display: flex;
-    gap: 12px;
-    font-size: 20px;
+
+.lesson-info {
+    display: grid;
+    gap: 2px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    font-weight: bold;
 }
 
-.lesson-icons span {
+.subject-name {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: .3px;
+    color: #222;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px #444 solid;
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+}
+
+.lecture-block  .subject-name { color: #0c5f17; }
+.exercise-block .subject-name { color: #123b60; }
+
+.lesson-icons {
+    align-self: flex-end;
+    gap: 12px;
+}
+
+.lesson-icons span,
+.lesson-icons button {
     cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
     transition: transform 0.2s;
 }
 
-.lesson-icons span:hover {
-    transform: scale(1.2);
+.lesson-icons span img:hover,
+.lesson-icons button img:hover {
+    transform: scale(1.1);
 }
 
-/* === FORMULARZ EDYCJI === */
-.form-edit form {
+
+.form-edit form,
+.form-create form {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -124,16 +347,17 @@ button:hover {
     padding: 10px;
     background-color: rgba(68, 68, 68, 0.42);
     border-radius: 10px;
-
 }
 
-.form-edit form .form-group {
+.form-edit form .form-group,
+.form-create form .form-group {
     display: flex;
     flex-direction: column;
     width: 200px;
 }
 
-.form-group label {
+.form-group label,
+.form-create label {
     font-weight: 500;
     margin-bottom: 4px;
     color: #BAE9E6;
@@ -155,7 +379,8 @@ button:hover {
     outline: none;
     background-color: #f9f9f9;
 }
-.btn {
+
+.submit {
     display: inline-block;
     padding: 8px 16px;
     background-color: #28a745;
@@ -163,8 +388,10 @@ button:hover {
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
+    border: none;
+    cursor: pointer;
 }
-.btn:hover {
+.submit:hover {
     background-color: #218838;
 }
 
@@ -176,4 +403,14 @@ button:hover {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 15px;
+}
+
+#create-form-container{
+    display:flex;
+    flex-direction:column;
+}
+
+#create-form-container .submit {
+    align-self: flex-end;
+    margin-bottom: 1rem;
 }

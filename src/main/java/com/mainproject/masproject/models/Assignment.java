@@ -2,9 +2,7 @@ package com.mainproject.masproject.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,8 +35,8 @@ public class Assignment {
     @JoinColumn(name = "group_uni_id")
     private GroupUni attendedBy;
 
-    @OneToMany(mappedBy = "accessedBy", cascade = CascadeType.ALL)
-    @NotNull
+    @OneToMany(mappedBy = "accessedBy", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @NotNull
     private Set<ClassActivity> accessTo = new HashSet<>();
 
     @ManyToOne

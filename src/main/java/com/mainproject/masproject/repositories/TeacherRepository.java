@@ -1,15 +1,12 @@
 package com.mainproject.masproject.repositories;
 
-import com.mainproject.masproject.dtos.TeacherDto;
 import com.mainproject.masproject.models.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
@@ -22,7 +19,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     WHERE t.id = :id
       AND a.dayOfWeek = :day
       AND a.startTime = :startTime
-      AND a.id <> :assignmentId
+      AND (:assignmentId IS NULL OR a.id <> :assignmentId)
 """)
 
     boolean isTeacherAvailable(
@@ -38,20 +35,11 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
         join t.employeeTeacher e
         join e.personEmployee p
 """)
-    List<TeacherProjection> findAllTeachers();
+    List<TeacherProjection> getAllTeachers();
 
     public interface TeacherProjection {
         Long getId();
         String getFullName();
     }
-
-
-//    @Query("""
-//        select new com.mainproject.masproject.dtos.TeacherDto(t.id, concat(p.firstName, ' ', p.lastName) ) from Teacher t
-//        join t.employeeTeacher e
-//        join e.personEmployee p
-//
-//""")
-//    List<TeacherDto> findAllTeachers();
 }
 

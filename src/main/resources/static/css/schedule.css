@@ -1,206 +1,32 @@
-/*body {*/
-/*    font-family: Arial, sans-serif;*/
-/*    margin: 40px;*/
-/*    background-color: #BAE9E6;*/
-/*}*/
 
-/*h3 {*/
-/*    background-color: #d3d3d3;*/
-/*    padding: 10px 15px;*/
-/*    border-radius: 8px;*/
-/*    margin-top: 30px;*/
-/*}*/
-
-/*form {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    margin-bottom: 30px;*/
-/*    gap: 10px;*/
-/*}*/
-
-/*select, button {*/
-/*    padding: 8px 12px;*/
-/*    font-size: 16px;*/
-/*}*/
-
-
-/*.container-group-form {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    margin-top: 30px;*/
-/*}*/
-
-/*.lesson-container {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    gap: 50px;*/
-/*    padding: 20px;*/
-/*    background-color: dimgrey;*/
-/*    border-radius: 20px;*/
-/*}*/
-
-/*.lesson {*/
-/*    flex: 1 1 300px;*/
-/*    min-width: 250px;*/
-/*    max-width: 300px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: flex-start;*/
-/*    padding: 10px;*/
-/*    border-radius: 10px;*/
-/*    margin: 10px 0;*/
-/*    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);*/
-/*}*/
-
-/*.lecture-block {*/
-/*    background-color: #B8F4B8;*/
-/*}*/
-
-/*.exercise-block {*/
-/*    background-color: #57B1E9;*/
-/*}*/
-
-/*.lesson-header {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-/*    width: 100%;*/
-/*}*/
-/*.lesson {*/
-/*    display: flex;*/
-/*    width: 100%;*/
-/*}*/
-
-/*.badge {*/
-/*    background-color: #444;*/
-/*    color: white;*/
-/*    padding: 4px 10px;*/
-/*    border-radius: 10px;*/
-/*    font-size: 14px;*/
-/*    font-weight: bold;*/
-/*    text-align: center;*/
-/*}*/
-
-/*.lesson-icons {*/
-/*    display: flex;*/
-/*    gap: 12px;*/
-/*    font-size: 20px;*/
-/*}*/
-
-/*.lesson-icons span {*/
-/*    cursor: pointer;*/
-/*    transition: transform 0.2s;*/
-/*}*/
-
-/*.lesson-icons span:hover {*/
-/*    transform: scale(1.2);*/
-/*}*/
-
-/*.form-edit form {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    gap: 1rem;*/
-/*    align-items: flex-start;*/
-/*    padding: 10px;*/
-/*    background-color: rgba(68, 68, 68, 0.42);*/
-/*    border-radius: 10px;*/
-/*}*/
-
-/*.form-edit form .form-group {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    width: 200px;*/
-/*}*/
-
-/*.form-group label {*/
-/*    font-weight: 500;*/
-/*    margin-bottom: 4px;*/
-/*    color: #BAE9E6;*/
-/*}*/
-/*.form-create label {*/
-/*    font-weight: 500;*/
-/*    margin-bottom: 4px;*/
-/*    color: #BAE9E6;*/
-/*}*/
-/*.form-create form .form-group {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    width: 200px;*/
-/*}*/
-/*.form-create  form {*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*    gap: 1rem;*/
-/*    align-items: flex-start;*/
-/*    padding: 10px;*/
-/*    background-color: rgba(68, 68, 68, 0.42);*/
-/*    border-radius: 10px;*/
-
-/*}*/
-
-
-/*.form-group select {*/
-/*    padding: 8px;*/
-/*    font-size: 14px;*/
-/*    border-radius: 6px;*/
-/*    border: 1px solid #ccc;*/
-/*    background-color: #fff;*/
-/*    color: #333;*/
-/*    transition: border-color 0.2s ease, box-shadow 0.2s ease;*/
-/*}*/
-
-/*.form-group select:focus {*/
-/*    border-color: #007bff;*/
-/*    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);*/
-/*    outline: none;*/
-/*    background-color: #f9f9f9;*/
-/*}*/
-/*.submit {*/
-/*    display: inline-block;*/
-/*    padding: 8px 16px;*/
-/*    background-color: #28a745;*/
-/*    color: white;*/
-/*    text-decoration: none;*/
-/*    border-radius: 6px;*/
-/*    font-weight: bold;*/
-/*}*/
-/*.submit:hover {*/
-/*    background-color: #218838;*/
-/*}*/
-
-/*.error-summary {*/
-/*    background-color: #ffdddd;*/
-/*    color: #a94442;*/
-/*    border: 1px solid #a94442;*/
-/*    padding: 10px;*/
-/*    border-radius: 5px;*/
-/*    margin-bottom: 15px;*/
-/*}*/
-
-
-/*!*przyciski*!*/
-/*.submit {*/
-/*    background-color: #28a745;*/
-/*    color: white;*/
-/*    border: none;*/
-/*    border-radius: 6px;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.submit:hover {*/
-/*    background-color: #218838;*/
-/*}*/
-
-
-
-/* ------------------------------------------------------------------ */
-/* 1. Ustawienia globalne                                             */
-/* ------------------------------------------------------------------ */
 body {
     font-family: Arial, sans-serif;
     margin: 40px;
     background-color: #BAE9E6;
+}
+
+
+.page-title {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 1.3vw + 1.2rem, 2.5rem);
+    color: #04406f;
+
+    text-align: center;
+    margin: 2rem 0 1.5rem;
+    position: relative;
+}
+
+
+.page-title::after {
+    content: "";
+    display: block;
+    /*width: 40%;*/
+    height: 3px;
+    background: #0d6efd;
+    margin: 0.6rem auto 0;
+    border-radius: 2px;
+    opacity: .8;
 }
 
 h3 {
@@ -223,9 +49,6 @@ button {
     font-size: 16px;
 }
 
-/* ------------------------------------------------------------------ */
-/* 2. Kontenery ogólne                                                */
-/* ------------------------------------------------------------------ */
 .container-group-form {
     display: flex;
     flex-direction: column;
@@ -243,16 +66,11 @@ button {
     border-radius: 20px;
 }
 
-/* ------------------------------------------------------------------ */
-/* 3. Karta lekcji                                                    */
-/* ------------------------------------------------------------------ */
 .lesson {
-    /* rozmiar i elastyczność w siatce */
+
     flex: 1 1 300px;
     min-width: 200px;
     max-width: 300px;
-
-    /* układ wewnętrzny w kolumnie */
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -264,7 +82,6 @@ button {
     background-color: #fff;
 }
 
-/* warianty kolorystyczne */
 .lecture-block  { background-color: #B8F4B8;}
 .exercise-block { background-color: #57B1E9;}
 
@@ -396,10 +213,19 @@ button {
 }
 
 
-.error-summary {
+.error-summary, .validation-info-schedule-empty {
     background-color: #ffdddd;
     color: #a94442;
     border: 1px solid #a94442;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.validation-info-schedule-no-group{
+    background-color: #f3e68b;
+    color: #987421;
+    border: 1px solid #c0ab36;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 15px;
@@ -413,4 +239,22 @@ button {
 #create-form-container .submit {
     align-self: flex-end;
     margin-bottom: 1rem;
+}
+
+/*sekcja błedy i przycisk*/
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.error-summary {
+    flex: 1 1 auto;
+    max-width: 60%;
+}
+.form-footer .submit {
+    margin-left: auto;
 }

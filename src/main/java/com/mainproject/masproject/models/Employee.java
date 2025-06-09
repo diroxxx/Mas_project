@@ -7,15 +7,14 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
-@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,26 +27,28 @@ public class Employee {
 
     private static int maxDailyHours = 12;
 
-//    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "person_id", updatable = false, nullable = false)
     private Person personEmployee;
 
 
-    @Builder
-    private Employee(LocalDate hireDate,
+    public Employee(LocalDate hireDate,
                      Teacher teacher,
                      DeanOfficeEmployee deanOffice) {
-
         this.hireDate   = hireDate;
+        if (teacher == null && deanOffice == null) {
+            throw new NullPointerException("Teacher and DeanOffice cannot be null at the same time");
+        }
 
-        this.teacher    = requireNonNull(teacher);
-        this.deanOfficeEmployee = requireNonNull(deanOffice);
-
+        if (teacher != null) {
+        this.teacher= requireNonNull(teacher);
         teacher.setEmployeeTeacher(this);
+        }
+        if (deanOffice != null) {
         deanOffice.setEmployeeDean(this);
+        this.deanOfficeEmployee = requireNonNull(deanOffice);
+        }
     }
-
 
     @OneToOne(mappedBy = "employeeDean", cascade = CascadeType.ALL)
     private DeanOfficeEmployee deanOfficeEmployee;
@@ -56,7 +57,21 @@ public class Employee {
     private Teacher teacher;
 
 
-//    void setPerson(Person person) { this.personEmployee = person; }
 
+
+    public List<String> getResponsibilities () {
+        if (deanOfficeEmployee == null) {
+            throw new NullPointerException("DeanOfficeEmployee is null");
+        }
+        return deanOfficeEmployee.getResponsibilities();
+
+    }
+
+    public List<String> getAcademicTitles() {
+        if(teacher == null) {
+            throw new NullPointerException("Teacher is null");
+        }
+        return teacher.getAcademicTitles();
+    }
 
 }

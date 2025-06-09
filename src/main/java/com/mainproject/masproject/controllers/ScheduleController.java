@@ -29,6 +29,8 @@ public class ScheduleController {
     private final ClassroomRepository classroomRepository;
     private final LessonRepository lessonRepository;
     private final AssignmentRepository assignmentRepository;
+    private final GroupUniRepository guideRepository;
+    private final LessonService lessonService;
 
    private static final List<LocalTime> times = new ArrayList<>(List.of(LocalTime.of(8, 30),
             LocalTime.of(10, 15),
@@ -44,16 +46,28 @@ public class ScheduleController {
                     .boxed()
                     .collect(Collectors.toMap(daysOfWeek::get, i -> i));
 
-    private final LessonService lessonService;
 
+    @ModelAttribute("createLesson")
+    public CreateLessonDto defaultCreateLesson() {
+        return new CreateLessonDto();
+    }
+
+    @ModelAttribute("lessonForm")
+    public EditLesson defaultLessonForm() {
+        return new EditLesson();
+    }
+
+    @ModelAttribute("deleteLesson")
+    public DeleteLessonDto defaultDeleteLesson() {
+        return new DeleteLessonDto();
+    }
 
     @GetMapping()
     public String schedule(@RequestParam(required = false) Long groupId, Model model) {
 
         model.addAttribute("timeSlots", times);
         model.addAttribute("subjects", subjectRepository.findAll());
-        List<TeacherRepository.TeacherProjection> allTeachers = teacherRepository.getAllTeachers();
-        model.addAttribute("teachers", allTeachers);
+        model.addAttribute("teachers", teacherRepository.getAllTeachers());
         model.addAttribute("daysOfWeek", daysOfWeek);
         model.addAttribute("classrooms", classroomRepository.getAllClassrooms());
         model.addAttribute("typesOfLecture", lessonRepository.getAllTypes());
@@ -63,9 +77,6 @@ public class ScheduleController {
         model.addAttribute("groups", allGroups);
         model.addAttribute("selectedGroupId", groupId);
 
-        EditLesson editLesson = new EditLesson();
-        CreateLessonDto createLessonDto = new CreateLessonDto();
-        DeleteLessonDto deleteLessonDto = new DeleteLessonDto();
         if (groupId != null) {
 
             List<GroupLessonDto> lessons = groupUniRepository.getFullSchedule(groupId);
@@ -87,18 +98,13 @@ public class ScheduleController {
                                     GroupLessonDto::getDayOfWeek,
                                     LinkedHashMap::new,
                                     Collectors.toList()));
-
-
-
-
             model.addAttribute("lessonsByDay", lessonsByDaySorted);
-            editLesson.setGroupUniId(groupId);
-            createLessonDto.setGroupUniId(groupId);
+
+            ((CreateLessonDto) model.getAttribute("createLesson")).setGroupUniId(groupId);
+            ((EditLesson)     model.getAttribute("lessonForm")).setGroupUniId(groupId);
+
         }
 
-        model.addAttribute("lessonForm", editLesson);
-        model.addAttribute("createLesson", createLessonDto);
-        model.addAttribute("deleteLesson", deleteLessonDto);
         return "editSchedule";
     }
 
@@ -113,35 +119,9 @@ public class ScheduleController {
     public String editLesson(
             @Valid @ModelAttribute("lessonForm") EditLesson lessonForm,
             BindingResult bindingResult,
-            Model model
+            Model model, RedirectAttributes redirectAttributes
     ) {
 
-//        System.out.println(lessonForm);
-//        if (!teacherRepository.isTeacherAvailable(
-//                lessonForm.getTeacherId(),
-//                lessonForm.getDayOfWeek(),
-//                lessonForm.getStartTime(),
-//                lessonForm.getAssignmentId())) {
-//
-//            bindingResult.rejectValue(
-//                    "teacherId",
-//                    "teacher.unavailable",
-//                    "The teacher is not available on this date\n"
-//            );
-//        }
-//
-//        if (!classroomRepository.isClassroomAvailable(
-//                lessonForm.getClassroomId(),
-//                lessonForm.getDayOfWeek(),
-//                lessonForm.getStartTime(),
-//                lessonForm.getAssignmentId())) {
-//
-//            bindingResult.rejectValue(
-//                    "classroomId",
-//                    "classroom.occupied",
-//                    "The classroom is already occupied"
-//            );
-//        }
         lessonService.validateCommonLessonData(
                 lessonForm.getTeacherId(),
                 lessonForm.getClassroomId(),
@@ -149,6 +129,18 @@ public class ScheduleController {
                 lessonForm.getStartTime(),
                 lessonForm.getAssignmentId(),
                 bindingResult);
+
+//      if (!groupUniRepository.isGroupUniAvailableWithAssignment(
+//                lessonForm.getGroupUniId(),
+//                lessonForm.getDayOfWeek(),
+//                lessonForm.getStartTime(),
+//                lessonForm.getAssignmentId()
+//                )){
+//          bindingResult.reject("groupBusyEdit", "Group has different classes in this time");
+//
+//
+//      }
+
 
         if (
                 lessonForm.getStartTime().equals(lessonForm.getOldStartTime()) &&
@@ -161,26 +153,16 @@ public class ScheduleController {
             bindingResult.reject("noChanges", "No changes were made to the lesson");
         }
 
-
         if (bindingResult.hasErrors()) {
-//            model.addAttribute("showForm", true);
-
-            model.addAttribute("teachers", teacherRepository.getAllTeachers());
-            model.addAttribute("subjects", subjectRepository.findAll());
-            model.addAttribute("timeSlots", times);
-            model.addAttribute("classrooms", classroomRepository.getAllClassrooms());
-            model.addAttribute("daysOfWeek", daysOfWeek);
-            model.addAttribute("typesOfLecture", lessonRepository.getAllTypes());
-
-            List<GroupLessonDto> lessons = groupUniRepository.getFullSchedule(lessonForm.getGroupUniId());
-            model.addAttribute("lessonsByDay", lessons.stream()
-                    .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek)));
-
-            return "editSchedule";
-//            return "redirect:/schedule";
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.lessonForm", bindingResult);
+            redirectAttributes.addFlashAttribute("lessonForm", lessonForm);
+            redirectAttributes.addAttribute("groupId", lessonForm.getGroupUniId());
+            return "redirect:/schedule";
         }
 
         lessonService.editLesson(lessonForm);
+        model.addAttribute("groupId", lessonForm.getGroupUniId());
+
         return "created-edited-Lesson-page";
     }
 
@@ -189,8 +171,17 @@ public class ScheduleController {
     public String createLesson(
             @Valid @ModelAttribute("createLesson") CreateLessonDto createLessonDto,
             BindingResult bindingResult,
-            Model model
+            Model model,RedirectAttributes redirectAttributes
     ) {
+
+
+        if (!groupUniRepository.isGroupUniAvailable(
+                createLessonDto.getGroupUniId(),
+                createLessonDto.getDayOfWeek(),
+                createLessonDto.getStartTime())){
+            bindingResult.reject("GroupIsBusy", "The group has classes on this date");
+
+        }
         lessonService.validateCommonLessonData(
                 createLessonDto.getTeacherId(),
                 createLessonDto.getClassroomId(),
@@ -199,37 +190,23 @@ public class ScheduleController {
                 createLessonDto.getAssignmentId(),
                 bindingResult);
 
-
         if (bindingResult.hasErrors()) {
-
-            model.addAttribute("teachers", teacherRepository.getAllTeachers());
-            model.addAttribute("subjects", subjectRepository.findAll());
-            model.addAttribute("timeSlots", times);
-            model.addAttribute("classrooms", classroomRepository.getAllClassrooms());
-            model.addAttribute("daysOfWeek", daysOfWeek);
-            model.addAttribute("typesOfLecture", lessonRepository.getAllTypes());
-
-            List<GroupLessonDto> lessons = groupUniRepository.getFullSchedule(createLessonDto.getGroupUniId());
-            model.addAttribute("lessonsByDay", lessons.stream()
-                    .collect(Collectors.groupingBy(GroupLessonDto::getDayOfWeek)));
-
-            return "editSchedule";
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createLesson", bindingResult);
+            redirectAttributes.addFlashAttribute("createLesson", createLessonDto);
+            redirectAttributes.addAttribute("groupId", createLessonDto.getGroupUniId());
+            return "redirect:/schedule";
         }
         lessonService.createLesson(createLessonDto);
+        model.addAttribute("groupId", createLessonDto.getGroupUniId());
+
         return "created-edited-Lesson-page";
     }
-
-    @GetMapping("/editedSuccesful")
-    public String editSuccesfull() {
-        return "created-edited-Lesson-page";
-    }
-
 
     @PostMapping("/deleteLesson")
-    public String deleteLesson(@Valid @ModelAttribute("deleteLesson") DeleteLessonDto deleteLessonDto) {
+    public String deleteLesson(@Valid @ModelAttribute("deleteLesson") DeleteLessonDto deleteLessonDto, Model model) {
         lessonService.deleteLesson(deleteLessonDto);
+        model.addAttribute("groupId", deleteLessonDto.getGroupId());
         return "deletedLesson-page";
     }
-
 
 }

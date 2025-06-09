@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link rel="stylesheet" th:href="@{/css/schedule.css}" />
+  <link rel="stylesheet" th:href="@{/css/result-page.css}" />
 
 </head>
 <body>
-  <h1>Created Lesson</h1>
-  <a th:href="@{/schedule}" class="btn">Home</a>
+<div id="container-result">
+    <h1>lesson was added/edited successfully</h1>
+    <a th:href="@{'/schedule'(groupId=${groupId})}" class="btn-result">Home</a>
+</div>
+
 </body>
 </html>

@@ -21,4 +21,6 @@ public class DeleteLessonDto {
     Long classroomIdToDelete;
     @NotNull
     Long assignmentToDelete;
+    @NotNull
+    Long groupId;
 }

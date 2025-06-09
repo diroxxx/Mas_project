@@ -6,15 +6,24 @@
 </head>
 <body>
 
+
+
 <div class="container-group-form">
-    <h1>Management of the schedule</h1>
+    <h1 class="page-title">Management of the schedule</h1>
+
     <form method="post" th:action="@{/schedule/getScheduleForGroup}" class="form-group">
         <div>
             <label for="group-select">Student groups</label>
             <select id="group-select" name="groupId" required>
-                <option th:value="${selectedGroupId}" disabled selected>Choose group</option>
+                <option value="" disabled
+                        th:selected="${selectedGroupId == null}">
+                    Choose group
+                </option>
                 <th:block th:each="group : ${groups}">
-                    <option th:value="${group.id}" th:text="${group.name}"></option>
+                    <option th:value="${group.id}"
+                            th:text="${group.name}"
+                        th:selected="${group.id == selectedGroupId}">
+                    </option>
                 </th:block>
             </select>
         </div>
@@ -29,24 +38,24 @@
 
 <div th:each="entry : ${lessonsByDay}">
     <h3 th:text="${entry.key}">Monday</h3>
-
-    <div class="lesson-container"  th:attr="id='day-' + ${entry.key}">
+    <div class="lesson-container"  th:id="'day-' + ${entry.key}">
         <div th:each="lesson : ${entry.value}">
             <div th:replace="fragments/lesson-card :: lessonCard(${lesson})" ></div>
         </div>
     </div>
+
+
 </div>
 <div th:replace="fragments/lesson-form-edit :: editForm"></div>
 
-<h1 th:if="${(lessonsByDay == null or #maps.isEmpty(lessonsByDay)) or selectedGroupId != null }">
-        This group has no classes
+<h1 class="validation-info-schedule-empty" th:if="${(lessonsByDay == null or #maps.isEmpty(lessonsByDay)) and selectedGroupId != null }">
+    This group has no classes
 </h1>
-<h1 th:if="${selectedGroupId != null}">
+<h1 class="validation-info-schedule-no-group" th:if="${selectedGroupId == null}">
     Please select a group to schedule
 </h1>
-
 <script>
-    function editLesson(el) {
+    function toggleEditForm(el) {
         const form = document.getElementById('edit-form');
 
 
@@ -86,20 +95,10 @@
             form.scrollIntoView({ behavior: 'smooth' });
         }
     }
-
     function toggleCreateForm() {
         const form = document.getElementById("create-form");
         form.style.display = (form.style.display === "flex") ? "none" : "flex";
     }
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-        if (document.querySelector("#create-form .field-error")) {
-            document.getElementById("create-form").style.display = "flex";
-        }
-    });
-
-
 </script>
 
 

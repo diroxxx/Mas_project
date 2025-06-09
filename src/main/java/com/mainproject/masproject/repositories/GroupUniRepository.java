@@ -14,13 +14,13 @@ import java.util.Optional;
 public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
 
     @Query("""
-    SELECT COUNT(g) = 0
+    SELECT CASE WHEN COUNT(a) = 0 THEN true ELSE false END
     FROM GroupUni g
     JOIN g.attendsIn a
     JOIN a.accessTo ca
     JOIN ca.heldIn c
     WHERE g.id = :id
-      AND lower(a.dayOfWeek) = lower(:day)
+      AND lower(a.dayOfWeek) = lower(:day) 
       AND a.startTime = :startTime
 """)
     boolean isGroupUniAvailable(
@@ -29,6 +29,24 @@ public interface GroupUniRepository extends JpaRepository<GroupUni, Long> {
             @Param("startTime") LocalTime startTime
     );
 
+
+
+
+    @Query("""
+SELECT COUNT(a) > 0
+FROM GroupUni g
+JOIN g.attendsIn a
+WHERE g.id = :groupId
+  AND lower(a.dayOfWeek) = lower(:day)
+  AND a.startTime = :startTime
+  AND a.id <> :currentAssignmentId
+""")
+    boolean isGroupUniAvailableWithAssignment(
+            @Param("groupId") Long id,
+            @Param("day") String day,
+            @Param("startTime") LocalTime startTime,
+            @Param("currentAssignmentId") Long currentAssignmentId
+    );
 
 
     Optional<GroupUni> findById(Long id);

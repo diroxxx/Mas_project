@@ -26,8 +26,8 @@ public class Teacher {
     @CollectionTable(name = "academic_title", joinColumns = @JoinColumn(name = "teacher_id"))
     private List<String> academicTitles = new ArrayList<>();
 
-//    @MapsId
     @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(name = "employee_id", updatable = false, nullable = false)
     private Employee employeeTeacher;
 
@@ -38,13 +38,13 @@ public class Teacher {
 
     @OneToMany(mappedBy = "taughtBy")
     @SQLRestriction("is_lead = true")
-    @Immutable
-    @Builder.Default
     private Set<Lesson> leads = new HashSet<>();
 
-
-
-
+    public Teacher(List<String> academicTitles) {
+        this.academicTitles = academicTitles;
+        this.teaches = new HashSet<>();
+        this.leads = new HashSet<>();
+    }
 
     public void addTaughtLesson(Lesson lesson) {
         Objects.requireNonNull(lesson);

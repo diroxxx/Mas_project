@@ -5,38 +5,39 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.aspectj.apache.bcel.classfile.ClassFormatException;
 
 import java.time.LocalDate;
-import java.util.Objects;
-
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Setter
-@Builder
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Setter
     @NotNull
     @Size(min = 2, max = 30)
     private String firstName;
 
+    @Setter
     @NotNull
     @Size(min = 2, max = 30)
     private String lastName;
 
+    @Setter
     @NotNull
     @Size(min = 11, max = 11)
     private String pesel;
 
+    @Setter
     @NotNull
     @Email
     private String email;
 
+    @Setter
     @Size(min = 9, max = 9)
     private int phoneNumber;
 
@@ -47,12 +48,11 @@ public class Person {
     private Employee personEmployee;
 
 
-    @Builder
-    private Person(String firstName,
+   public Person(String firstName,
                    String lastName,
                    String email,
                    String pesel,
-                   Integer phoneNumber,
+                   int phoneNumber,
                    Student student,
                    Employee employee) {
 
@@ -62,16 +62,30 @@ public class Person {
         this.pesel       = pesel;
         this.phoneNumber = phoneNumber;
 
-        this.student  = Objects.requireNonNull(student);
-        this.personEmployee = Objects.requireNonNull(employee);
-
-        student.setPersonStudent(this);
-        employee.setPersonEmployee(this);
+        if (student == null && employee == null) {
+            throw new NullPointerException("Null student or employee can not be null at the same time");
+        }
+        if (student != null) {
+            this.student = student;
+            student.setPersonStudent(this);
+        }
+        if (employee != null) {
+            this.personEmployee = employee;
+            employee.setPersonEmployee(this);
+        }
     }
 
-    public String    getIndexNumber()   { return student.getIndex(); }
-    public LocalDate getHireDate()      { return personEmployee.getHireDate();  }
-
-
+    public String getIndexNumber() {
+        if (student != null) {
+            return student.getIndex();
+        }
+        throw new ClassFormatException("student is null, so you can't get index number");
+    }
+    public LocalDate getHireDate() {    {
+        if (personEmployee != null) {
+            return personEmployee.getHireDate();
+        }
+        throw new ClassCastException("personEmployee is null , so you can't get hire date");  }
+        }
 
 }

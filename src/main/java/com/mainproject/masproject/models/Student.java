@@ -10,10 +10,8 @@ import java.util.Set;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,8 +33,22 @@ public class Student {
         this.index = index;
         this.tuitionBalance = tuitionBalance;
     }
-    void setPerson(Person person) { this.personStudent = person; }
 
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "person_id", updatable = false, nullable = false)
+    private Person personStudent;
+
+
+    @ManyToMany()
+    @JoinTable(
+            name = "student_group",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_uni_id")
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<GroupUni> submitTo = new HashSet<>();
 
 
     public void graduate() {
@@ -66,22 +78,6 @@ public class Student {
         this.status = StudentStatus.WITHDRAWN;
     }
 
-//    @MapsId
-    @OneToOne(optional = false)
-    @JoinColumn(name = "person_id", updatable = false, nullable = false)
-    private Person personStudent;
-
-
-    @ManyToMany()
-    @JoinTable(
-            name = "student_group",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "group_uni_id")
-    )
-    @Builder.Default
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<GroupUni> submitTo = new HashSet<>();
 
 
 }

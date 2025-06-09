@@ -1,12 +1,15 @@
 
 <div th:fragment="createForm">
+<!--<div th:fragment="createForm(createLesson)">-->
 
-    <div class="form-create" id="create-form" style="display: none;">
+    <div class="form-create" id="create-form" style="display: none;"
+         th:object="${createLesson}"
+         th:style="${#fields.hasErrors('*')} ? 'display:flex' : 'display:none'"
+    >
 
         <form th:action="@{/schedule/createLesson}"
               th:object="${createLesson}"
-              method="post"
-        >
+              method="post">
             <input type="hidden" id="create-lesson" th:field="*{lessonId}" />
             <input type="hidden" id="create-group"  th:field="*{groupUniId}" />
             <input type="hidden" id="create-ass" th:field="*{assignmentId}" />
@@ -70,16 +73,16 @@
                         <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>
                     </th:block>
                 </select>
+
+            </div>
+            <div class="form-footer">
+                <div th:if="${#fields.hasErrors('*')}" class="error-summary">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                    </ul>
+                </div>
                 <button class="submit" type="submit">Create</button>
             </div>
-
-
-            <div th:if="${#fields.hasErrors('*')}" class="error-summary">
-                <ul>
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                </ul>
-            </div>
-
         </form>
 
     </div>

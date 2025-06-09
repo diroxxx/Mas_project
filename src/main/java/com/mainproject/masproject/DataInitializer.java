@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,87 +37,76 @@ public class DataInitializer {
 
             try {
 
+                Person person5 = new Person(
+                        "Julia",
+                        "Wtopa",
+                        "che-dom@wpl.pl",
+                        "12312312312311",
+                        123123123,
+                        new Student("s2742223", 1234),
+                        new Employee(
+                                LocalDate.of(2025, 5, 12),
+                                new Teacher(List.of("mgr")),
+                                null
+                                )
+                        );
 
+                Person person4 = new Person(
+                        "Konrad",
+                        "Wierzbicki",
+                        "che-dom@wpl.pl",
+                        "12312312312311",
+                        123123123,
+                        new Student("s2743", 1234),
+                        new Employee(
+                                LocalDate.of(2025, 5, 12),
+                                new Teacher(List.of("mgr")),
+                                new DeanOfficeEmployee(List.of("papers")
+                                )
+                        )
+                );
 
-//                Person p = Person.builder()
-//                        .firstName("Anna").lastName("Nowak")
-//                        .email("a@uni.pl").pesel("92012345678")
-//                        .student(new Student("s12345", 2000))
-//                        .personEmployee(
-//                                Employee.builder()
-//                                        .hireDate(LocalDate.now())
-//                                        .teacher(new Teacher())
-//                                        .deanOfficeEmployee(new DeanOfficeEmployee())
-//                                        .build())
-//                        .build();
-//
-//                personRepository.save(p);
+                Person person = new Person(
+                        "Tomek",
+                        "Kowalski",
+                        "che-dom2@wpl.pl",
+                        "12312312311",
+                        123123123,
+                        new Student("s27354", 1234),
+                        new Employee(
+                                LocalDate.of(2025, 3, 12),
+                                new Teacher(List.of("mgr")),
+                                null
+                        )
+                );
 
-                Person person = Person.builder()
-                        .pesel("12312312311")
-                        .firstName("Tomek")
-                        .lastName("Kowalksi")
-                        .email("che-dom@wp.pl")
-                        .phoneNumber(123123123)
-                        .build();
-                personRepository.save(person);
-
-                Student student = new Student();
-                student.setIndex("s27354");
-                student.setPersonStudent(person);
-
-
-                Employee employee = Employee.builder()
-                        .hireDate(LocalDate.of(2025, 3, 12))
-                        .personEmployee(person)
-                        .build();
-                employeeRepository.save(employee);
-
-                Teacher teacher = Teacher.builder()
-                        .academicTitles(List.of("prof", "mgr"))
-                        .employeeTeacher(employee)
-                        .build();
-                teacherRepository.save(teacher);
-
-                Person person2 = Person.builder()
-                        .pesel("12312312311")
-                        .firstName("Dominika")
-                        .lastName("Nowak")
-                        .email("che-dom@wp.pl")
-                        .phoneNumber(123123123)
-                        .build();
-
-                Employee employee2 = Employee.builder()
-                        .hireDate(LocalDate.of(2024, 12, 12))
-                        .personEmployee(person2)
-                        .build();
-
-                Teacher teacher2 = Teacher.builder()
-                        .academicTitles(List.of( "mgr"))
-                        .employeeTeacher(employee2)
-                        .build();
-                person2.setPersonEmployee(employee2);
-                employee2.setPersonEmployee(person2);
-                employee2.setTeacher(teacher2);
-                teacher2.setEmployeeTeacher(employee2);
-                personRepository.save(person2);
-
+                Person person2 = new Person(
+                        "Dominika",
+                        "Wcislo",
+                        "che-dom2@wpl.pl",
+                        "12312312311",
+                        547342123,
+                        null,
+                        new Employee(
+                                LocalDate.of(2024, 3, 12),
+                                new Teacher(List.of("mgr", "inz")),
+                                null
+                        )
+                );
+                personRepository.saveAll(List.of(person, person2, person4, person5));
 
                 GroupUni groupUni = new GroupUni();
                 groupUni.setName("25c_s6");
                 groupUni.setCapacity(21);
                 groupUniRepository.save(groupUni);
 
-                student.getSubmitTo().add(groupUni);
-                groupUni.getSubmitedBy().put(student.getIndex(), student);
+                if (person.getStudent().getSubmitTo() == null) {
+                    person.getStudent().setSubmitTo(new HashSet<>());
+                }
+                groupUni.getSubmitedBy().put(person.getStudent().getIndex(), person.getStudent());
 
+                person.getStudent().getSubmitTo().add(groupUni);
 
-                person.setPersonEmployee(employee);
-                person.setStudent(student);
-                employee.setTeacher(teacher);
-
-                studentRepository.save(student);
-                employeeRepository.save(employee);
                 personRepository.save(person);
 
 
@@ -176,7 +166,7 @@ public class DataInitializer {
                 GroupUni groupUni2 = new GroupUni();
                 groupUni2.setName("25c_s7");
                 groupUni2.setCapacity(20);
-                groupUni2.addStudent(student);
+                groupUni2.addStudent(person.getStudent());
                 groupUniRepository.save(groupUni2);
 
 
@@ -184,22 +174,28 @@ public class DataInitializer {
                 Lesson lesson1 = new Lesson();
                 lesson1.setType(LessonType.EXERCISE);
                 lesson1.setBasedOn(subjectRealization1);
-                lesson1.setTaughtBy(teacher);
+                lesson1.setTaughtBy(person.getPersonEmployee().getTeacher());
 
-//                teacher.promoteToLead(lesson1);
-                teacher.getTeaches().add(lesson1);
+
+                person.getPersonEmployee().getTeacher().getTeaches().add(lesson1);
 
 
                 Lesson lesson2 = new Lesson();
                 lesson2.setType(LessonType.LECTURE);
                 lesson2.setBasedOn(subjectRealization2);
-                lesson2.setTaughtBy(teacher2);
+                lesson2.setTaughtBy(person2.getPersonEmployee().getTeacher());
+
+                Lesson lesson3 = new Lesson();
+                lesson2.setType(LessonType.LECTURE);
+                lesson2.setBasedOn(subjectRealization2);
+                lesson2.setTaughtBy(person.getPersonEmployee().getTeacher());
+
 
                 subjectRealization1.getBasedFor().add(lesson1);
                 subjectRealization2.getBasedFor().add(lesson2);
 
-                teacher2.getTeaches().add(lesson2);
-                teacherRepository.saveAll(List.of(teacher, teacher2));
+                person2.getPersonEmployee().getTeacher().getTeaches().add(lesson2);
+                teacherRepository.saveAll(List.of(person.getPersonEmployee().getTeacher(), person2.getPersonEmployee().getTeacher()));
                 lessonRepository.saveAll(List.of(lesson1, lesson2));
 
                 subjectRealizationRepository.saveAll(List.of(subjectRealization1, subjectRealization2));
@@ -264,6 +260,68 @@ public class DataInitializer {
                 classroom.getHolds().add(classActivity3);
 
                 classroomRepository.saveAll(List.of(classroom, classroom2));
+
+        //dodawanie subjects
+            Subject mdd = new Subject();
+            mdd.setCode("Mdd");
+            mdd.setEcts(4);
+            mdd.setName("3dModeling Graphic");
+
+            SubjectRealization subjectRealizationMdd = new SubjectRealization();
+            subjectRealizationMdd.setIncludedBy(mdd);
+            subjectRealizationMdd.setOfferedBy(semester1);
+            subjectRealizationMdd.setLanguage(LangType.ENGLISH);
+            subjectRealizationMdd.setMode(ModeType.STATIONARY);
+            semester1.getOffers().add(subjectRealizationMdd);
+            mdd.getIncludedIn().add(subjectRealizationMdd);
+
+
+
+                Subject pbio = new Subject();
+                pbio.setCode("Pbio");
+                pbio.setEcts(5);
+                pbio.setName("bioinformatics");
+
+                SubjectRealization subjectRealizationPbio = new SubjectRealization();
+                subjectRealizationPbio.setIncludedBy(pbio);
+                subjectRealizationPbio.setOfferedBy(semester1);
+                subjectRealizationPbio.setLanguage(LangType.ENGLISH);
+                subjectRealizationPbio.setMode(ModeType.STATIONARY);
+                semester1.getOffers().add(subjectRealizationPbio);
+                pbio.getIncludedIn().add(subjectRealizationPbio);
+
+
+
+                Subject mas = new Subject();
+                mas.setCode("Mas");
+                mas.setEcts(5);
+                mas.setName("Modeling and analysis of information systems");
+
+                SubjectRealization subjectRealizationMas = new SubjectRealization();
+                subjectRealizationMas.setIncludedBy(mas);
+                subjectRealizationMas.setOfferedBy(semester1);
+                subjectRealizationMas.setLanguage(LangType.ENGLISH);
+                subjectRealizationMas.setMode(ModeType.STATIONARY);
+                semester1.getOffers().add(subjectRealizationMas);
+                mas.getIncludedIn().add(subjectRealizationMas);
+
+                Subject miw = new Subject();
+                miw.setCode("Miw");
+                miw.setEcts(5);
+                miw.setName("engineering knowledge methods");
+
+                SubjectRealization subjectRealizationMiw = new SubjectRealization();
+                subjectRealizationMiw.setIncludedBy(miw);
+                subjectRealizationMiw.setOfferedBy(semester1);
+                subjectRealizationMiw.setLanguage(LangType.ENGLISH);
+                subjectRealizationMiw.setMode(ModeType.STATIONARY);
+                semester1.getOffers().add(subjectRealizationMiw);
+                miw.getIncludedIn().add(subjectRealizationMiw);
+
+
+                subjectRepository.saveAll(List.of(pbio,mdd, mas,miw));
+
+
 
             }catch (Exception e){
                 e.printStackTrace();

@@ -26,7 +26,7 @@
                data-classroom-id=${lesson.classId},
                data-type=${lesson.lessonType},
                data-assignment-id=${lesson.assignmentId}"
-                          onclick="editLesson(this)">
+                          onclick="toggleEditForm(this)">
                     <img th:src="@{/css/image/edit.svg}" alt="Edit"/>
                     </span>
 
@@ -36,6 +36,7 @@
                         <input type="hidden" name="dayOfWeekToDelete" th:value="${lesson.dayOfWeek}" />
                         <input type="hidden" name="classroomIdToDelete" th:value="${lesson.classId}" />
                         <input type="hidden" name="assignmentToDelete" th:value="${lesson.assignmentId}" />
+                        <input type="hidden" name="groupId" th:value="${selectedGroupId}" />
 
                         <button class="icon-btn" type="submit" onclick="return confirm('Czy na pewno chcesz usunąć lekcję?')"><img th:src="@{/css/image/bin.svg}" alt="Edit"/>
                             </button>

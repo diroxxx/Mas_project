@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
 
-
     @Query("""
        SELECT DISTINCT ts
        FROM Assignment a

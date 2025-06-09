@@ -1,13 +1,15 @@
 
 <div th:fragment="editForm">
 
-<div class="form-edit" id="edit-form" style="display: none;">
+<div class="form-edit" id="edit-form" style="display: none;"
+     th:object="${lessonForm}"
+     th:style="${#fields.hasErrors('*')} ? 'display:flex' : 'display:none'"
+>
 
     <form th:action="@{/schedule/editLesson}"
           th:object="${lessonForm}"
           method="post"
           >
-
         <input type="hidden" th:field="*{lessonId}"/>
         <input type="hidden" th:field="*{groupUniId}" />
         <input type="hidden" th:field="*{oldDayOfWeek}" />
@@ -17,7 +19,6 @@
         <input type="hidden" th:field="*{oldClassroomId}" />
         <input type="hidden" th:field="*{oldSubjectId}" />
         <input type="hidden" th:field="*{oldTypeOfLecture}" />
-
 
         <div class="form-group">
             <label th:for="subjectId">Subject</label>
@@ -78,14 +79,15 @@
                     <option th:value="${typeOfLecture}" th:text="${typeOfLecture}"></option>
                 </th:block>
             </select>
-            <button class="submit" type="submit">Update</button>
+
         </div>
-
-
-        <div th:if="${#fields.hasErrors('*')}" class="error-summary">
-            <ul>
-                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-            </ul>
+        <div class="form-footer">
+            <div th:if="${#fields.hasErrors('*')}" class="error-summary">
+                <ul>
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
+            </div>
+            <button class="submit" type="submit">Edit</button>
         </div>
 
     </form>

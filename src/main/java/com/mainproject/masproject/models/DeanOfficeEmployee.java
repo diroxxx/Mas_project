@@ -24,6 +24,11 @@ public class DeanOfficeEmployee {
     @CollectionTable(name = "responsibilities", joinColumns = @JoinColumn(name = "dean_office_employee_id"))
     private List<String> responsibilities = new ArrayList<>();
 
+
+    public DeanOfficeEmployee(List<String> responsibilities) {
+        this.responsibilities = responsibilities;
+    }
+
     @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "employee_id", updatable = false, nullable = false)

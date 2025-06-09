@@ -36,6 +36,8 @@ public class LessonService {
         list.addAll(List.of(LessonType.values()));
         return list;
     }
+
+
     public void validateCommonLessonData(
             Long teacherId,
             Long classroomId,
@@ -45,14 +47,14 @@ public class LessonService {
             BindingResult bindingResult
     ) {
         if (!teacherRepository.isTeacherAvailable(teacherId, dayOfWeek, startTime, assignmentId)) {
-            bindingResult.rejectValue("teacherId", "teacher.unavailable", "Nauczyciel nie jest dostępny w tym terminie");
+            bindingResult.rejectValue("teacherId", "teacher.unavailable", "The teacher is not available on this date");
         }
 
         if (!classroomRepository.isClassroomAvailable(classroomId, dayOfWeek, startTime, assignmentId)) {
-            bindingResult.rejectValue("classroomId", "classroom.occupied", "Sala jest już zajęta");
+            bindingResult.rejectValue("classroomId", "classroom.occupied", "The Classroom is already occupied");
         }
-    }
 
+    }
 
     @Transactional
     public void editLesson(EditLesson editLesson) {
@@ -84,8 +86,7 @@ public class LessonService {
                         .orElseThrow(() -> new RuntimeException("ca not found"));
 
         Subject subject = subjectRepository.findById(editLesson.getSubjectId()).orElseThrow(() -> new RuntimeException("Subject not found"));
-        System.out.println("new subject: " + subject.getId() );
-        System.out.println("old: " + editLesson.getOldSubjectId());
+
         if (!editLesson.getOldSubjectId().equals(subject.getId())) {
             subjectRealization.setIncludedBy(subject);
             lesson.setBasedOn(subjectRealization);
@@ -199,12 +200,9 @@ public class LessonService {
 //        if (lesson.getBasedOn() != null)
 //            lesson.getBasedOn().getBasedFor().remove(lesson);
 
-        // Usuwanie
 //        classActivityRepository.delete(activity);
 //        assignmentRepository.delete(assignment);
         lessonRepository.delete(lesson);
-
-//        lessonRepository.flush();
 
     }
 
